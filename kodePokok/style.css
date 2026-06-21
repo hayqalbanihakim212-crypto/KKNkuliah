@@ -1983,37 +1983,33 @@ button {
   }
   /* Matikan animasi masuk versi desktop, ganti dengan stagger drawer mobile */
   .main-nav > ul > li {
-    animation: none;
     opacity: 0;
     transform: translateX(28px);
-    transition: none;
+    transition:
+      opacity 0.4s var(--ease-spring),
+      transform 0.4s var(--ease-spring);
   }
   .main-nav.active > ul > li {
-    animation: mobileNavItemIn 0.5s var(--ease-spring) both;
+    opacity: 1;
+    transform: translateX(0);
   }
   .main-nav.active > ul > li:nth-child(1) {
-    animation-delay: 0.06s;
+    transition-delay: 0.06s;
   }
   .main-nav.active > ul > li:nth-child(2) {
-    animation-delay: 0.11s;
+    transition-delay: 0.11s;
   }
   .main-nav.active > ul > li:nth-child(3) {
-    animation-delay: 0.16s;
+    transition-delay: 0.16s;
   }
   .main-nav.active > ul > li:nth-child(4) {
-    animation-delay: 0.21s;
+    transition-delay: 0.21s;
   }
   .main-nav.active > ul > li:nth-child(5) {
-    animation-delay: 0.26s;
+    transition-delay: 0.26s;
   }
   .main-nav.active > ul > li:nth-child(6) {
-    animation-delay: 0.31s;
-  }
-  @keyframes mobileNavItemIn {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    transition-delay: 0.31s;
   }
   .nav-link {
     width: 100%;
