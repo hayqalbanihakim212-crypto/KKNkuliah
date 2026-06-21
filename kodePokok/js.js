@@ -26,10 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
       siteHeader.classList.remove("is-scrolled");
     }
 
-    // Auto-hide: sembunyikan saat scroll ke bawah, tampilkan saat scroll ke atas
-    if (currentScrollY > lastScrollY && currentScrollY > HIDE_THRESHOLD) {
+    // Auto-hide: sembunyikan hanya jika scroll ke bawah cukup signifikan,
+    // tampilkan lagi begitu user scroll ke atas (selisih kecil diabaikan
+    // supaya header tidak "kedip" hilang-muncul tiap beberapa pixel)
+    const scrollDelta = currentScrollY - lastScrollY;
+    if (currentScrollY > HIDE_THRESHOLD && scrollDelta > 6) {
       siteHeader.classList.add("is-hidden");
-    } else {
+    } else if (scrollDelta < -6 || currentScrollY <= HIDE_THRESHOLD) {
       siteHeader.classList.remove("is-hidden");
     }
   }

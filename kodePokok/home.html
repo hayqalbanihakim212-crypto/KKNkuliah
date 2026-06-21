@@ -171,133 +171,121 @@
         >
           <span></span><span></span><span></span>
         </button>
+      </div>
+    </header>
 
-        <nav class="main-nav" id="main-nav">
+    <nav class="main-nav" id="main-nav">
+      <button
+        class="main-nav-close"
+        id="main-nav-close"
+        aria-label="Tutup menu"
+        type="button"
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M5 5L19 19M19 5L5 19"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+      <ul>
+        <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
+        <li><a href="#beranda" class="nav-link">Beranda</a></li>
+        <li><a href="#profil" class="nav-link">Profil Desa</a></li>
+        <li><a href="#proker" class="nav-link">Program Kerja</a></li>
+        <li class="has-dropdown">
           <button
-            class="main-nav-close"
-            id="main-nav-close"
-            aria-label="Tutup menu"
             type="button"
+            class="nav-link dropdown-toggle"
+            id="struktur-toggle"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            Struktur
+            <!-- Ikon baru: chevron bergaya berlian/diamond -->
+            <svg
+              class="caret"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+            >
               <path
-                d="M5 5L19 19M19 5L5 19"
+                d="M2 4L6 8L10 4"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               />
             </svg>
           </button>
-          <ul>
-            <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
-            <li><a href="#beranda" class="nav-link">Beranda</a></li>
-            <li><a href="#profil" class="nav-link">Profil Desa</a></li>
-            <li><a href="#proker" class="nav-link">Program Kerja</a></li>
-            <li class="has-dropdown">
+          <ul class="dropdown-menu" id="struktur-menu">
+            <li>
+              <button type="button" class="dropdown-item" data-divisi="ketua">
+                Ketua
+              </button>
+            </li>
+            <li>
               <button
                 type="button"
-                class="nav-link dropdown-toggle"
-                id="struktur-toggle"
-                aria-haspopup="true"
-                aria-expanded="false"
+                class="dropdown-item"
+                data-divisi="sekretaris"
               >
-                Struktur
-                <!-- Ikon baru: chevron bergaya berlian/diamond -->
-                <svg
-                  class="caret"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2 4L6 8L10 4"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                Sekretaris
               </button>
-              <ul class="dropdown-menu" id="struktur-menu">
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="ketua"
-                  >
-                    Ketua
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="sekretaris"
-                  >
-                    Sekretaris
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="bendahara"
-                  >
-                    Bendahara
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="acara"
-                  >
-                    Acara
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="humas"
-                  >
-                    Humas
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="konsumsi"
-                  >
-                    Konsumsi
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="dropdown-item" data-divisi="pdd">
-                    PDD
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    class="dropdown-item"
-                    data-divisi="perlengkapan"
-                  >
-                    Perlengkapan
-                  </button>
-                </li>
-              </ul>
             </li>
-            <li><a href="#galeri" class="nav-link">Galeri</a></li>
-            <li><a href="#kontak" class="nav-link">Kontak</a></li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                data-divisi="bendahara"
+              >
+                Bendahara
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item" data-divisi="acara">
+                Acara
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item" data-divisi="humas">
+                Humas
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                data-divisi="konsumsi"
+              >
+                Konsumsi
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item" data-divisi="pdd">
+                PDD
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="dropdown-item"
+                data-divisi="perlengkapan"
+              >
+                Perlengkapan
+              </button>
+            </li>
           </ul>
-        </nav>
-        <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
-      </div>
-    </header>
+        </li>
+        <li><a href="#galeri" class="nav-link">Galeri</a></li>
+        <li><a href="#kontak" class="nav-link">Kontak</a></li>
+      </ul>
+    </nav>
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
     <main>
       <!-- 1. HERO / BERANDA -->
