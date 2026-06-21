@@ -1,2 +1,2 @@
 ## Tautan Akses
-* [Beranda (Index)](kodePokok/index.html)
+* [Beranda (Index)](kodePokok/home.html)
