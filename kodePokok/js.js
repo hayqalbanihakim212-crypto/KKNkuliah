@@ -136,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function openMobileNav() {
     if (!navMenu) return;
     navMenu.classList.add("active");
+    navMenu.scrollTop = 0;
     if (navBackdrop) navBackdrop.classList.add("active");
     if (menuToggle) {
       menuToggle.classList.add("active");
@@ -153,6 +154,13 @@ document.addEventListener("DOMContentLoaded", function () {
       menuToggle.setAttribute("aria-expanded", "false");
     }
     document.body.style.overflow = "";
+
+    const openDropdown = document.querySelector(".has-dropdown.open");
+    if (openDropdown) {
+      openDropdown.classList.remove("open");
+      const toggleBtn = openDropdown.querySelector(".dropdown-toggle");
+      if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
+    }
   }
 
   if (menuToggle && navMenu) {

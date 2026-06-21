@@ -1963,6 +1963,7 @@ button {
     top: 0;
     right: 0;
     height: 100vh;
+    height: 100dvh;
     width: min(78vw, 320px);
     background-color: var(--cream);
     box-shadow: -10px 0 30px rgba(27, 46, 40, 0.15);
