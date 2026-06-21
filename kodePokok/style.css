@@ -2031,6 +2031,7 @@ button {
     transform: translateX(2px);
   }
   .nav-link.active {
+    color: var(--ink);
     border-left-color: var(--gold);
     background-color: rgba(201, 162, 39, 0.1);
   }
