@@ -29,6 +29,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -37,6 +39,8 @@ body {
   color: var(--text);
   background-color: var(--cream);
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 img {
@@ -240,9 +244,17 @@ button {
   transform: translateY(30px) scale(0.9) rotate(-3deg);
 }
 
-/* =========================================
-   3. HEADER & NAVIGASI
-   ========================================= */
+.nav-backdrop,
+.main-nav-close {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-backdrop,
+  .main-nav-close {
+    display: flex;
+  }
+}
 .site-header {
   position: fixed;
   top: 0;
@@ -1905,6 +1917,47 @@ button {
     display: none;
   }
 
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 26, 22, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s var(--ease),
+      visibility 0.3s var(--ease);
+    z-index: 550;
+  }
+  .nav-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .main-nav-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .main-nav-close:hover {
+    background-color: rgba(201, 162, 39, 0.15);
+  }
+  .main-nav-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .main-nav {
     position: fixed;
     top: 0;
@@ -1917,7 +1970,7 @@ button {
     transition: transform 0.32s var(--ease);
     padding: 100px 24px 24px;
     overflow-y: auto;
-    z-index: 499;
+    z-index: 600;
   }
   .main-nav.active {
     transform: translateX(0);
