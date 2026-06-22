@@ -16,7 +16,73 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --container: 1120px;
+
+  color-scheme: light;
+  transition:
+    background-color 0.4s var(--ease),
+    color 0.4s var(--ease);
 }
+
+/* ---- MODE GELAP ----
+   Diaktifkan lewat atribut data-theme="dark" pada <html>,
+   diatur oleh toggle di header (lihat js.js bagian "DARK MODE"). */
+html[data-theme="dark"] {
+  --ink: #0c1714;
+  --cream: #15211c;
+  --gold: #d8b13a;
+  --gold-deep: #c9a227;
+  --sage: #8aa89a;
+  --text: #e9e6da;
+  --white: #1b2620;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+  background-color: var(--cream);
+}
+
+/* Permukaan kartu/section yang sebelumnya mengandalkan putih solid
+   perlu sedikit disesuaikan supaya tetap kontras & elegan di dark mode */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .gallery-item {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(216, 177, 58, 0.18);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .section-tint {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ---- Teks hardcode (#555 / #444) yang tidak berubah di dark mode ---- */
+html[data-theme="dark"] .section-sub,
+html[data-theme="dark"] .profil-text p,
+html[data-theme="dark"] .program-card p,
+html[data-theme="dark"] .kontak-row p {
+  color: rgba(233, 230, 218, 0.72);
+}
+
+/* Judul & angka statistik di profil desa */
+html[data-theme="dark"] .stat strong {
+  color: var(--text);
+}
+
+/* Kontak label "Alamat", "Telepon" dll */
+html[data-theme="dark"] .kontak-row strong {
+  color: var(--text);
+}
+
+/* Modal: judul divisi pakai var(--ink) yg di dark mode = hampir hitam */
+html[data-theme="dark"] .modal-body h3 {
+  color: var(--text);
+}
+
+/* Hover baris anggota di modal: #ece6d4 hardcode tidak cocok untuk dark */
+html[data-theme="dark"] .modal-anggota-list li.is-visible:hover {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Placeholder kontak-form sudah dihapus */
 
 /* =========================================
    1. RESET
@@ -113,7 +179,8 @@ button {
 
 .section-sub {
   max-width: 560px;
-  color: #555;
+  color: var(--text);
+  opacity: 0.72;
   line-height: 1.6;
   margin: -8px 0 40px;
 }
@@ -587,6 +654,16 @@ button {
 }
 
 /* ---- NAVIGASI ---- */
+/* Default desktop: nav tampil horizontal, sebagai flex item di dalam
+   .header-inner (sejajar .brand, .theme-toggle, .menu-toggle) */
+.main-nav {
+  display: flex;
+  align-items: center;
+  height: 68px;
+  margin-left: auto;
+  margin-right: 18px;
+}
+
 .main-nav > ul {
   position: relative;
   list-style: none;
@@ -617,6 +694,9 @@ button {
 }
 .main-nav > ul > li:nth-child(6) {
   animation-delay: 0.86s;
+}
+.main-nav > ul > li:nth-child(7) {
+  animation-delay: 0.92s;
 }
 @keyframes navItemIn {
   to {
@@ -722,6 +802,58 @@ button {
   transform: rotate(180deg);
 }
 
+/* ---- TOMBOL GANTI TEMA (LIGHT/DARK) ---- */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.12);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  color: var(--cream);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-right: 6px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease-spring);
+}
+.theme-toggle:hover {
+  background-color: rgba(201, 162, 39, 0.22);
+  transform: scale(1.06);
+}
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.4s var(--ease-spring);
+}
+.theme-toggle .icon-sun {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
+}
+.theme-toggle .icon-moon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+html[data-theme="dark"] .theme-toggle .icon-sun {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+html[data-theme="dark"] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+}
+
 /* Hamburger */
 .menu-toggle {
   display: none;
@@ -777,10 +909,10 @@ button {
 
 .dropdown-menu {
   position: absolute;
-  top: 110%;
+  top: 100%;
+  margin-top: 12px;
   left: 0;
   min-width: 200px;
-  margin: 0;
   padding: 8px;
   list-style: none;
   background-color: var(--white);
@@ -1165,7 +1297,8 @@ button {
 
 .profil-text p {
   line-height: 1.75;
-  color: #444;
+  color: var(--text);
+  opacity: 0.78;
   margin: 0 0 18px;
 }
 
@@ -1375,7 +1508,8 @@ button {
 }
 .program-card p {
   margin: 0;
-  color: #555;
+  color: var(--text);
+  opacity: 0.7;
   line-height: 1.6;
   font-size: 0.92rem;
 }
@@ -1455,8 +1589,9 @@ button {
    ========================================= */
 .kontak-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 50px;
+  align-items: start;
 }
 .kontak-row {
   display: flex;
@@ -1471,46 +1606,298 @@ button {
   color: var(--gold);
   margin-top: 2px;
 }
+.kontak-ig-icon {
+  color: var(--gold);
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
 .kontak-row strong {
   display: block;
   font-size: 0.85rem;
   color: var(--ink);
   margin-bottom: 4px;
 }
+html[data-theme="dark"] .kontak-row strong {
+  color: var(--text);
+}
 .kontak-row p {
   margin: 0;
-  color: #555;
+  color: var(--text);
+  opacity: 0.72;
   font-size: 0.92rem;
 }
+.kontak-social-link {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 0.22s var(--ease),
+    letter-spacing 0.22s var(--ease);
+}
+.kontak-social-link:hover {
+  color: var(--gold-deep);
+  letter-spacing: 0.01em;
+}
 
-.kontak-form {
+/* Tombol ke Instagram KKN */
+.btn-ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(238, 42, 123, 0.3);
+  transition:
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s var(--ease),
+    filter 0.25s var(--ease);
+}
+.btn-ig svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.btn-ig:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(238, 42, 123, 0.42);
+  filter: brightness(1.07);
+}
+
+/* ---- KONTAK DEVELOPER ---- */
+.kontak-dev {
   display: flex;
   flex-direction: column;
+}
+.kontak-dev-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 20px;
+}
+.dev-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dev-card {
+  display: flex;
+  align-items: flex-start;
   gap: 14px;
-}
-.kontak-form input,
-.kontak-form textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid #ddd5bf;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 0.95rem;
+  padding: 16px 18px;
   background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid rgba(201, 162, 39, 0.15);
   transition:
-    border-color 0.22s var(--ease),
-    box-shadow 0.22s var(--ease);
+    box-shadow 0.25s var(--ease),
+    transform 0.25s var(--ease-spring),
+    border-color 0.25s var(--ease);
 }
-.kontak-form input:focus,
-.kontak-form textarea:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+.dev-card:hover {
+  box-shadow: 0 8px 24px rgba(27, 46, 40, 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(201, 162, 39, 0.35);
 }
-.kontak-form .btn {
-  align-self: flex-start;
-  border: none;
+html[data-theme="dark"] .dev-card {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(216, 177, 58, 0.14);
 }
+html[data-theme="dark"] .dev-card:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+.dev-avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 162, 39, 0.18),
+    rgba(201, 162, 39, 0.06)
+  );
+  border: 1.5px solid rgba(201, 162, 39, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+}
+.dev-avatar svg {
+  width: 20px;
+  height: 20px;
+}
+.dev-info {
+  flex: 1;
+  min-width: 0;
+}
+.dev-info strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+html[data-theme="dark"] .dev-info strong {
+  color: var(--text);
+}
+.dev-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dev-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.22s var(--ease-spring);
+}
+.dev-link svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.dev-link:hover {
+  transform: translateX(3px);
+}
+.dev-link-wa {
+  color: #128c7e;
+  background-color: rgba(37, 211, 102, 0.08);
+}
+.dev-link-wa:hover {
+  background-color: rgba(37, 211, 102, 0.16);
+  color: #075e54;
+}
+html[data-theme="dark"] .dev-link-wa {
+  color: #25d366;
+  background-color: rgba(37, 211, 102, 0.1);
+}
+.dev-link-ig {
+  color: var(--sage);
+  background-color: rgba(91, 122, 107, 0.08);
+}
+.dev-link-ig:hover {
+  background-color: rgba(201, 162, 39, 0.12);
+  color: var(--gold-deep);
+}
+
+/* ---- KARTU PROJECT (Qalopi.ai) ---- */
+.dev-card-project {
+  align-items: center;
+}
+.dev-avatar-project {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 162, 39, 0.16),
+    rgba(201, 162, 39, 0.04)
+  );
+}
+.dev-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dev-avatar-fallback {
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+.dev-project-desc {
+  margin: 2px 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink);
+  opacity: 0.72;
+}
+html[data-theme="dark"] .dev-project-desc {
+  color: rgba(233, 230, 218, 0.72);
+  opacity: 1;
+}
+.dev-links-row {
+  flex-direction: row;
+  gap: 8px;
+}
+.dev-links-row .dev-link {
+  padding: 8px;
+  border-radius: 50%;
+}
+.dev-links-row .dev-link svg {
+  width: 16px;
+  height: 16px;
+}
+.dev-link-web {
+  color: var(--gold-deep);
+  background-color: rgba(201, 162, 39, 0.1);
+}
+.dev-link-web:hover {
+  background-color: rgba(201, 162, 39, 0.2);
+  transform: translateY(-2px);
+}
+/* Tombol "Website" menampilkan logo Qalopi.ai sebagai ikon, bukan SVG globe */
+.dev-link-web {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+}
+.dev-link-web-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+.dev-link-github {
+  color: var(--ink);
+  background-color: rgba(27, 46, 40, 0.06);
+}
+html[data-theme="dark"] .dev-link-github {
+  color: var(--text);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+.dev-link-github:hover {
+  background-color: rgba(27, 46, 40, 0.12);
+  transform: translateY(-2px);
+}
+html[data-theme="dark"] .dev-link-github:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.dev-links-row .dev-link-ig:hover {
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 900px) {
+  .kontak-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- FORM DAFTAR DIRI: dihapus ---- */
 
 /* =========================================
    9. FOOTER
@@ -1558,8 +1945,8 @@ button {
   position: fixed;
   right: 28px;
   bottom: 28px;
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background-color: var(--ink);
   border: 1.5px solid rgba(201, 162, 39, 0.4);
@@ -1573,6 +1960,8 @@ button {
   opacity: 0;
   visibility: hidden;
   transform: translateY(18px) scale(0.85);
+  overflow: visible;
+  isolation: isolate;
   transition:
     opacity 0.3s var(--ease),
     visibility 0.3s var(--ease),
@@ -1591,19 +1980,25 @@ button {
   border-color: var(--gold);
   transform: translateY(-4px) scale(1.06);
 }
-.back-to-top svg {
+.back-to-top svg:not(.back-to-top-ring) {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 /* ---- Cincin progres scroll yang melingkari tombol kembali ke atas ---- */
 .back-to-top-ring {
   position: absolute;
-  inset: -2px;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  transform: rotate(-90deg);
+  top: 50%;
+  left: 50%;
+  width: 58px;
+  height: 58px;
+  transform: translate(-50%, -50%) rotate(-90deg);
   pointer-events: none;
+  z-index: 1;
+  overflow: visible;
 }
 .ring-track {
   fill: none;
@@ -1888,8 +2283,7 @@ button {
    12. RESPONSIVE
    ========================================= */
 @media screen and (max-width: 900px) {
-  .profil-grid,
-  .kontak-grid {
+  .profil-grid {
     grid-template-columns: 1fr;
   }
   .profil-visual {
@@ -2010,6 +2404,9 @@ button {
   }
   .main-nav.active > ul > li:nth-child(6) {
     transition-delay: 0.31s;
+  }
+  .main-nav.active > ul > li:nth-child(7) {
+    transition-delay: 0.36s;
   }
   .nav-link {
     width: 100%;
