@@ -1,5 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
   /* =========================================
+     0. MODE GELAP (DARK MODE)
+     Disimpan di localStorage supaya pilihan
+     pengguna tetap diingat saat kembali ke situs.
+     ========================================= */
+  const THEME_STORAGE_KEY = "kkn2026-theme";
+  const themeToggleBtn = document.getElementById("theme-toggle");
+  const htmlEl = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      htmlEl.setAttribute("data-theme", "dark");
+    } else {
+      htmlEl.removeAttribute("data-theme");
+    }
+    // Update aria-label tombol agar pembaca layar tahu kondisi aktif
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Ganti ke tema terang" : "Ganti ke tema gelap",
+      );
+    }
+  }
+
+  function getPreferredTheme() {
+    try {
+      const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === "dark" || saved === "light") return saved;
+    } catch (e) {
+      // localStorage mungkin diblokir (mode privat dsb) — abaikan saja
+    }
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return prefersDark ? "dark" : "light";
+  }
+
+  let currentTheme = getPreferredTheme();
+  applyTheme(currentTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", function () {
+      currentTheme = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(currentTheme);
+      try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
+      } catch (e) {
+        // abaikan jika localStorage tidak tersedia
+      }
+    });
+  }
+
+  /* =========================================
      1. MESIN SCROLL TERPADU
      (header auto-hide, parallax hero, progress
      bar, tombol kembali ke atas — digabung jadi
@@ -422,21 +474,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* =========================================
-     4. FORM KONTAK (DEMO, BELUM ADA BACKEND)
-     ========================================= */
-  const kontakForm = document.getElementById("kontak-form");
-
-  if (kontakForm) {
-    kontakForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      alert(
-        "Terima kasih! Pesan Anda telah diterima (demo, belum terhubung ke server).",
-      );
-      kontakForm.reset();
-    });
-  }
-
-  /* =========================================
      5. DROPDOWN MENU "STRUKTUR"
      ========================================= */
   const strukturDropdown = document.querySelector(".has-dropdown");
@@ -487,7 +524,12 @@ document.addEventListener("DOMContentLoaded", function () {
       gambar: "png/bendahara.jpeg",
       anggota: [
         { peran: "Bendahara 1", nama: "Afriya", foto: "", ig: "" },
-        { peran: "Bendahara 2", nama: "Aisyah", foto: "", ig: "" },
+        {
+          peran: "Bendahara 2",
+          nama: "Aisyah",
+          foto: "",
+          ig: "https://www.instagram.com/sitiaisaa__?igsh=OGJtZ3F6ZXMzczFk",
+        },
       ],
     },
     acara: {
@@ -495,9 +537,17 @@ document.addEventListener("DOMContentLoaded", function () {
       gambar: "png/acara.jpeg",
       anggota: [
         { nama: "Dafa Aulia", foto: "", ig: "" },
-        { nama: "Hanin", foto: "", ig: "" },
+        {
+          nama: "Hanin",
+          foto: "",
+          ig: "https://www.instagram.com/haninmunthee_?igsh=MWtvdHJxY25keDd6dw==",
+        },
         { nama: "Alya", foto: "", ig: "" },
-        { nama: "Khadifa", foto: "", ig: "" },
+        {
+          nama: "Khadifa",
+          foto: "",
+          ig: "https://www.instagram.com/khdffamssy_?igsh=MTFiNHh4ZXVsNmt2aA==",
+        },
         { nama: "Saripah Aini", foto: "", ig: "" },
       ],
     },
@@ -505,19 +555,43 @@ document.addEventListener("DOMContentLoaded", function () {
       nama: "Bidang Humas",
       gambar: "png/humas.jpeg",
       anggota: [
-        { nama: "Amru", foto: "", ig: "" },
-        { nama: "Uswah", foto: "", ig: "" },
-        { nama: "Dhabita", foto: "", ig: "" },
-        { nama: "Saskia", foto: "", ig: "" },
+        {
+          nama: "Amru",
+          foto: "",
+          ig: "https://www.instagram.com/muhammadamru_13?igsh=bzZ5MmRlcGdtdHM3",
+        },
+        {
+          nama: "Uswah",
+          foto: "",
+          ig: "https://www.instagram.com/uswh_hsn?igsh=Y25laTZxZjF5NG5u",
+        },
+        {
+          nama: "Dhabita",
+          foto: "",
+          ig: "https://www.instagram.com/dhabita_s?igsh=MWRkbGV1MTRkcTdiMg==",
+        },
+        {
+          nama: "Saskia",
+          foto: "",
+          ig: "https://www.instagram.com/saskianryshfa?igsh=MTk3NHJpMHl3c29vNA==",
+        },
       ],
     },
     konsumsi: {
       nama: "Bidang Konsumsi",
       gambar: "png/konsumsi.jpeg",
       anggota: [
-        { nama: "Emmi", foto: "", ig: "" },
+        {
+          nama: "Emmi",
+          foto: "",
+          ig: "https://www.instagram.com/emmikhairi?igsh=aGx2czNmODZvbnY3",
+        },
         { nama: "Ardelia", foto: "", ig: "" },
-        { nama: "Sella", foto: "", ig: "" },
+        {
+          nama: "Sella",
+          foto: "",
+          ig: "https://www.instagram.com/sella_smnjntk?igsh=eXBxb3Y3MWU2YXY2",
+        },
         { nama: "Dina", foto: "", ig: "" },
         { nama: "Nur Riadoh Rangkuti", foto: "", ig: "" },
         { nama: "Elysa Rahmayani", foto: "", ig: "" },
@@ -528,18 +602,30 @@ document.addEventListener("DOMContentLoaded", function () {
       gambar: "png/pdd.jpeg",
       anggota: [
         { nama: "Tri Alya", foto: "", ig: "" },
-        { nama: "Sofiya", foto: "", ig: "" },
+        {
+          nama: "Sofiya",
+          foto: "",
+          ig: "https://www.instagram.com/sofnay_05?igsh=b3NkY3AwcHhrNnBj",
+        },
       ],
     },
     perlengkapan: {
       nama: "Bidang Perlengkapan",
       gambar: "png/perlengkapan.jpeg",
       anggota: [
-        { nama: "Aripin", foto: "", ig: "" },
+        {
+          nama: "Aripin",
+          foto: "",
+          ig: "https://www.instagram.com/arifinhasibuan18?igsh=MTJrZTQwYXU3Z2g2Zg%3D%3D&utm_source=qr&wa_status_inline=true",
+        },
         { nama: "Fahri", foto: "", ig: "" },
         { nama: "Ahmad", foto: "", ig: "" },
         { nama: "Priansyah", foto: "", ig: "" },
-        { nama: "Intan", foto: "", ig: "" },
+        {
+          nama: "Intan",
+          foto: "",
+          ig: "https://www.instagram.com/intansufiza_?igsh=M2R0N2t4OWhhdDdi",
+        },
         { nama: "Aulia Rahmadina", foto: "", ig: "" },
       ],
     },

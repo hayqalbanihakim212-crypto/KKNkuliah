@@ -11,6 +11,22 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <!-- Anti-FOUC: terapkan tema sebelum CSS dirender supaya tidak ada "kedip" terang -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("kkn2026-theme");
+          if (!t) {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          }
+          if (t === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <!-- INDIKATOR PROGRESS SCROLL -->
@@ -162,6 +178,172 @@
           </span>
         </a>
 
+        <nav class="main-nav" id="main-nav">
+          <button
+            class="main-nav-close"
+            id="main-nav-close"
+            aria-label="Tutup menu"
+            type="button"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 5L19 19M19 5L5 19"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <ul>
+            <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
+            <li><a href="#beranda" class="nav-link">Beranda</a></li>
+            <li><a href="#profil" class="nav-link">Profil Desa</a></li>
+            <li><a href="#proker" class="nav-link">Program Kerja</a></li>
+            <li class="has-dropdown">
+              <button
+                type="button"
+                class="nav-link dropdown-toggle"
+                id="struktur-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Struktur
+                <!-- Ikon baru: chevron bergaya berlian/diamond -->
+                <svg
+                  class="caret"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 4L6 8L10 4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <ul class="dropdown-menu" id="struktur-menu">
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="ketua"
+                  >
+                    Ketua
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="sekretaris"
+                  >
+                    Sekretaris
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="bendahara"
+                  >
+                    Bendahara
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="acara"
+                  >
+                    Acara
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="humas"
+                  >
+                    Humas
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="konsumsi"
+                  >
+                    Konsumsi
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item" data-divisi="pdd">
+                    PDD
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="dropdown-item"
+                    data-divisi="perlengkapan"
+                  >
+                    Perlengkapan
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#galeri" class="nav-link">Galeri</a></li>
+            <li><a href="#kontak" class="nav-link">Kontak</a></li>
+          </ul>
+        </nav>
+
+        <!-- Tombol ganti tema (terang/gelap) -->
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="Ganti tema terang/gelap"
+        >
+          <svg
+            class="icon-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg
+            class="icon-sun"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="4.5"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <path
+              d="M12 2.5V5M12 19V21.5M4.4 4.4L6.2 6.2M17.8 17.8L19.6 19.6M2.5 12H5M19 12H21.5M4.4 19.6L6.2 17.8M17.8 6.2L19.6 4.4"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+
         <!-- Hamburger (mobile) — ikon 3-garis animasi ke X -->
         <button
           class="menu-toggle"
@@ -173,118 +355,6 @@
         </button>
       </div>
     </header>
-
-    <nav class="main-nav" id="main-nav">
-      <button
-        class="main-nav-close"
-        id="main-nav-close"
-        aria-label="Tutup menu"
-        type="button"
-      >
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path
-            d="M5 5L19 19M19 5L5 19"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
-      <ul>
-        <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
-        <li><a href="#beranda" class="nav-link">Beranda</a></li>
-        <li><a href="#profil" class="nav-link">Profil Desa</a></li>
-        <li><a href="#proker" class="nav-link">Program Kerja</a></li>
-        <li class="has-dropdown">
-          <button
-            type="button"
-            class="nav-link dropdown-toggle"
-            id="struktur-toggle"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Struktur
-            <!-- Ikon baru: chevron bergaya berlian/diamond -->
-            <svg
-              class="caret"
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M2 4L6 8L10 4"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-          <ul class="dropdown-menu" id="struktur-menu">
-            <li>
-              <button type="button" class="dropdown-item" data-divisi="ketua">
-                Ketua
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                class="dropdown-item"
-                data-divisi="sekretaris"
-              >
-                Sekretaris
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                class="dropdown-item"
-                data-divisi="bendahara"
-              >
-                Bendahara
-              </button>
-            </li>
-            <li>
-              <button type="button" class="dropdown-item" data-divisi="acara">
-                Acara
-              </button>
-            </li>
-            <li>
-              <button type="button" class="dropdown-item" data-divisi="humas">
-                Humas
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                class="dropdown-item"
-                data-divisi="konsumsi"
-              >
-                Konsumsi
-              </button>
-            </li>
-            <li>
-              <button type="button" class="dropdown-item" data-divisi="pdd">
-                PDD
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                class="dropdown-item"
-                data-divisi="perlengkapan"
-              >
-                Perlengkapan
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li><a href="#galeri" class="nav-link">Galeri</a></li>
-        <li><a href="#kontak" class="nav-link">Kontak</a></li>
-      </ul>
-    </nav>
     <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
     <main>
@@ -818,6 +888,7 @@
           <p class="eyebrow" data-reveal="blur">Hubungi Kami</p>
           <h2 class="section-title">Kontak</h2>
           <div class="kontak-grid">
+            <!-- Kiri: Alamat + Instagram KKN dengan ikon WA -->
             <div class="kontak-info" data-reveal="left">
               <div class="kontak-row">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -839,60 +910,193 @@
                   <p>Posko KKN Desa Tiga Beringin</p>
                 </div>
               </div>
+
+              <!-- Ikon Instagram -->
               <div class="kontak-row">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M5 4 H9 L11 9 L8.5 10.5 C9.5 13 11 14.5 13.5 15.5 L15 13 L20 15 V19 C20 20 19 21 18 21 C10 21 3 14 3 6 C3 5 4 4 5 4 Z"
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="kontak-ig-icon"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="3.5"
+                    y="3.5"
+                    width="17"
+                    height="17"
+                    rx="5"
                     stroke="currentColor"
                     stroke-width="1.8"
-                    stroke-linejoin="round"
                   />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" />
                 </svg>
                 <div>
-                  <strong>Telepon / WA</strong>
-                  <p>08xx-xxxx-xxxx</p>
+                  <strong>Instagram KKN</strong>
+                  <a
+                    href="https://www.instagram.com/kkn2026_tigaberingin"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="kontak-social-link"
+                    >@kkn2026_tigaberingin</a
+                  >
                 </div>
               </div>
-              <div class="kontak-row">
+
+              <!-- Tombol CTA: ke Instagram KKN -->
+              <a
+                href="https://www.instagram.com/kkn2026_tigaberingin"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-ig"
+              >
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <rect
-                    x="3"
-                    y="5"
-                    width="18"
-                    height="14"
-                    rx="2"
+                    x="3.5"
+                    y="3.5"
+                    width="17"
+                    height="17"
+                    rx="5"
                     stroke="currentColor"
                     stroke-width="1.8"
                   />
-                  <path
-                    d="M3.5 6 L12 13 L20.5 6"
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
                     stroke="currentColor"
                     stroke-width="1.8"
-                    stroke-linecap="round"
                   />
+                  <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" />
                 </svg>
-                <div>
-                  <strong>Email</strong>
-                  <p>kkn.tigaberingin@example.ac.id</p>
+                <span>Hubungi via Instagram</span>
+              </a>
+            </div>
+
+            <!-- Kanan: Dikembangkan oleh -->
+            <div class="kontak-dev" data-reveal="right">
+              <p class="kontak-dev-label">Dikembangkan Oleh</p>
+              <div class="dev-cards">
+                <div class="dev-card dev-card-project">
+                  <div class="dev-avatar dev-avatar-project" aria-hidden="true">
+                    <!-- Placeholder logo qalopi.ai — akan diganti dengan logo asli -->
+                    <img
+                      src="png/qalopi-logo.png"
+                      alt="Logo Qalopi.ai"
+                      class="dev-avatar-img"
+                      onerror="
+                        this.style.display = 'none';
+                        this.nextElementSibling.style.display = 'flex';
+                      "
+                    />
+                    <svg
+                      class="dev-avatar-fallback"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      style="display: none"
+                    >
+                      <path
+                        d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12 12L20 7.5M12 12L4 7.5M12 12V21"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="dev-info">
+                    <strong>Qalopi.ai</strong>
+                    <p class="dev-project-desc">
+                      Website ini dibangun dengan dukungan tim Qalopi.ai
+                    </p>
+                    <div class="dev-links dev-links-row">
+                      <!--
+                        TODO: Dokumen PDF tentang Qalopi.ai BELUM SIAP.
+                        href di bawah ini ("pdf/qalopi-ai-profile.pdf") adalah PLACEHOLDER.
+                        Ganti dengan path PDF asli begitu dokumen profil Qalopi.ai tersedia,
+                        lalu letakkan file PDF-nya di folder /pdf pada root project.
+                      -->
+                      <a
+                        href="pdf/qalopi-ai-profile.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="dev-link dev-link-web"
+                        aria-label="Lihat dokumen profil Qalopi.ai (PDF)"
+                        title="Profil Qalopi.ai (PDF)"
+                      >
+                        <img
+                          src="png/qalopi.aiNewlogo.png"
+                          alt="Qalopi.ai"
+                          class="dev-link-web-img"
+                        />
+                      </a>
+                      <a
+                        href="https://instagram.com/qalopi.ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="dev-link dev-link-ig"
+                        aria-label="Instagram Qalopi.ai"
+                        title="Instagram"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <rect
+                            x="3.5"
+                            y="3.5"
+                            width="17"
+                            height="17"
+                            rx="5"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                          />
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="3.6"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                          />
+                          <circle
+                            cx="17.2"
+                            cy="6.8"
+                            r="1"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </a>
+                      <a
+                        href="https://github.com/qalopi-ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="dev-link dev-link-github"
+                        aria-label="GitHub Qalopi.ai"
+                        title="GitHub"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M12 0.5C5.65 0.5 0.5 5.78 0.5 12.3c0 5.21 3.29 9.63 7.86 11.19.57.11.78-.26.78-.57 0-.28-.01-1.22-.02-2.21-3.2.72-3.87-1.42-3.87-1.42-.52-1.36-1.28-1.72-1.28-1.72-1.04-.73.08-.71.08-.71 1.15.08 1.76 1.21 1.76 1.21 1.02 1.78 2.68 1.27 3.33.97.1-.75.39-1.27.71-1.56-2.55-.3-5.24-1.31-5.24-5.83 0-1.29.44-2.34 1.16-3.16-.12-.3-.5-1.52.11-3.16 0 0 .95-.31 3.12 1.21a10.7 10.7 0 015.68 0c2.16-1.52 3.11-1.21 3.11-1.21.62 1.64.24 2.86.12 3.16.72.82 1.16 1.87 1.16 3.16 0 4.53-2.7 5.53-5.26 5.82.41.37.78 1.1.78 2.22 0 1.6-.01 2.89-.01 3.28 0 .31.21.69.79.57C20.71 21.92 24 17.5 24 12.3 24 5.78 18.85.5 12.5.5h-.5Z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <form class="kontak-form" id="kontak-form" data-reveal="right">
-              <input type="text" name="nama" placeholder="Nama Anda" required />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Anda"
-                required
-              />
-              <textarea
-                name="pesan"
-                rows="4"
-                placeholder="Pesan Anda"
-                required
-              ></textarea>
-              <button type="submit" class="btn btn-solid">Kirim Pesan</button>
-            </form>
           </div>
         </div>
       </section>
