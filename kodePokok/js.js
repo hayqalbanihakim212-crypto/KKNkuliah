@@ -548,7 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
           peran: "Bendahara 1",
           nama: "Avria Damayani",
           foto: "png/keanggotaan/avria.jpeg",
-          ig: "⁠https://www.instagram.com/avria.damayani?igsh=NzdraTE3cWFreml4&utm_source=qr",
+          ig: "https://www.instagram.com/avria.damayani?igsh=NzdraTE3cWFreml4&utm_source=qr",
         },
         {
           peran: "Bendahara 2",
@@ -569,7 +569,7 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           nama: "M.Pryansyah",
           foto: "png/keanggotaan/priansyah.jpeg",
-          ig: "⁠https://www.instagram.com/mhd_prians?igsh=MWNmOTN2eWVkbDUwNA%3D%3D&utm_source=qr",
+          ig: "https://www.instagram.com/mhd_prians?igsh=MWNmOTN2eWVkbDUwNA%3D%3D&utm_source=qr",
         },
         {
           nama: "Fathiyah Hanin Munthe",
@@ -644,7 +644,7 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           nama: "Nur Riadoh Rangkuti",
           foto: "png/keanggotaan/nurangkuti.jpeg",
-          ig: "⁠https://www.instagram.com/nurriadohrangkuti_?igsh=MTBwbW03Z2R5ejZmbQ==",
+          ig: "https://www.instagram.com/nurriadohrangkuti_?igsh=MTBwbW03Z2R5ejZmbQ==",
         },
         { nama: "Elysa Rahmayani", foto: "png/keanggotaan/elsa.jpeg", ig: "" },
       ],
