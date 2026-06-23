@@ -96,7 +96,9 @@ html[data-theme="dark"] .modal-anggota-list li.is-visible:hover {
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* max-width + width mencegah gap horizontal di browser mobile */
   width: 100%;
+  max-width: 100vw;
 }
 
 body {
@@ -106,7 +108,11 @@ body {
   background-color: var(--cream);
   overflow-x: hidden;
   width: 100%;
+  /* max-width ketat 100vw mencegah gap/white space di sisi kanan mobile */
+  max-width: 100vw;
   position: relative;
+  /* Cegah margin collapse yang bisa memunculkan gap vertikal */
+  isolation: isolate;
 }
 
 img {
@@ -141,6 +147,10 @@ button {
 
 .section {
   padding: 110px 24px;
+  /* Cegah section overflow horizontal di mobile */
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 .section-tint {
   background-color: #ece6d4;
@@ -663,6 +673,8 @@ button {
   margin-left: auto;
   margin-right: 18px;
 }
+/* Catatan: semua override mobile untuk .main-nav ada di @media (max-width: 768px)
+   di bagian bawah file — tidak ada blok terpisah di sini agar tidak konflik */
 
 .main-nav > ul {
   position: relative;
@@ -750,9 +762,29 @@ button {
     color 0.25s var(--ease);
 }
 
-/* Header selalu gelap, nav-link selalu cream */
-.site-header.is-scrolled .nav-link {
-  color: var(--cream);
+/* Header SELALU gelap (baik light maupun dark mode, baik scrolled maupun tidak).
+   Nav-link harus SELALU terlihat terang — gunakan warna literal #f5f1e6 bukan
+   var(--cream) yang di dark mode berubah jadi #15211c (hampir hitam, tak terlihat).
+   PENTING: aturan ini HANYA untuk nav horizontal desktop. Di mobile (drawer),
+   .main-nav punya background var(--cream) sendiri, jadi teks krem di sini akan
+   "menghilang" di atas drawer krem saat light mode. Maka dibatasi (min-width: 769px)
+   supaya tidak menang melawan aturan drawer mobile di .main-nav .nav-link. */
+@media screen and (min-width: 769px) {
+  .site-header .nav-link {
+    color: #f5f1e6 !important;
+  }
+  .site-header.is-scrolled .nav-link {
+    color: #f5f1e6 !important;
+  }
+  /* Hover dan aktif tetap pakai gold */
+  .site-header .nav-link:hover,
+  .site-header.is-scrolled .nav-link:hover {
+    color: var(--gold) !important;
+  }
+  .site-header .nav-link.active,
+  .site-header.is-scrolled .nav-link.active {
+    color: var(--gold) !important;
+  }
 }
 
 .nav-link::after {
@@ -790,7 +822,7 @@ button {
 /* Header selalu gelap — scrolled hover sama saja */
 .site-header.is-scrolled .nav-link:hover {
   background-color: rgba(201, 162, 39, 0.18);
-  color: var(--gold);
+  color: var(--gold) !important;
 }
 
 /* Caret dropdown baru */
@@ -982,6 +1014,9 @@ html[data-theme="dark"] .theme-toggle .icon-moon {
   padding: 140px 24px 100px;
   background: linear-gradient(160deg, var(--ink) 0%, #1a3328 50%, #213a32 100%);
   overflow: hidden;
+  /* Cegah hero melebar melebihi viewport — penyebab gap putih di mobile */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Cahaya lembut yang mengikuti gerak kursor — kedalaman ekstra di hero */
@@ -1841,10 +1876,17 @@ html[data-theme="dark"] .dev-project-desc {
 .dev-links-row {
   flex-direction: row;
   gap: 8px;
+  align-items: center;
 }
-.dev-links-row .dev-link {
+/* Semua link di row disamakan 36x36px agar simetris */
+.dev-links-row .dev-link:not(.dev-link-web) {
   padding: 8px;
   border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .dev-links-row .dev-link svg {
   width: 16px;
@@ -1858,19 +1900,22 @@ html[data-theme="dark"] .dev-project-desc {
   background-color: rgba(201, 162, 39, 0.2);
   transform: translateY(-2px);
 }
-/* Tombol "Website" menampilkan logo Qalopi.ai sebagai ikon, bukan SVG globe */
+/* Ukuran disamakan dengan IG dan GitHub: 36x36px agar ketiga elemen seimbang */
 .dev-link-web {
-  padding: 0;
-  width: 32px;
-  height: 32px;
+  padding: 2px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   overflow: hidden;
+  background-color: #111111;
+  border-radius: 12px !important;
 }
 .dev-link-web-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  border-radius: 50%;
+  border-radius: 0;
 }
 .dev-link-github {
   color: var(--ink);
@@ -2322,11 +2367,21 @@ html[data-theme="dark"] .dev-link-github:hover {
     transition:
       opacity 0.3s var(--ease),
       visibility 0.3s var(--ease);
-    z-index: 550;
+    /* Lebih rendah dari .site-header (lihat .site-header:has(.main-nav.active))
+       supaya backdrop tidak menutupi drawer menu mobile yang ada di dalam header */
+    z-index: 490;
   }
   .nav-backdrop.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* .main-nav kini position: fixed independen (bukan child stacking context header),
+     jadi z-index header tidak perlu dinaikkan untuk drawer. Header tetap 500,
+     backdrop 490, drawer 700. Class nav-open dipertahankan untuk kompatibilitas JS. */
+  .site-header:has(.main-nav.active),
+  .site-header.nav-open {
+    z-index: 500;
   }
 
   .main-nav-close {
@@ -2353,27 +2408,46 @@ html[data-theme="dark"] .dev-link-github:hover {
   }
 
   .main-nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    height: 100dvh;
-    width: min(78vw, 320px);
+    /* Drawer mobile: sepenuhnya di luar stacking context header,
+       posisi fixed independen dengan z-index lebih tinggi dari semua. */
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: 0 !important;
+    /* Tinggi penuh viewport — pakai dvh untuk mobile browser dengan address bar */
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    width: min(78vw, 320px) !important;
+    /* Reset semua desktop flex props */
+    display: block !important;
+    margin: 0 !important;
+    flex: none !important;
+    align-items: unset !important;
+    /* Tampilan drawer */
     background-color: var(--cream);
     box-shadow: -10px 0 30px rgba(27, 46, 40, 0.15);
-    transform: translateX(100%);
+    /* Sembunyikan ke kanan, masuk saat .active */
+    transform: translateX(110%);
     transition: transform 0.32s var(--ease);
     padding: 100px 24px 24px;
     overflow-y: auto;
-    z-index: 600;
+    overflow-x: hidden;
+    /* Di atas header (500), di atas backdrop (490) */
+    z-index: 700 !important;
   }
   .main-nav.active {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
   .main-nav > ul {
     flex-direction: column;
     align-items: stretch;
     gap: 4px;
+    /* Reset desktop positioning agar ul mengisi drawer penuh */
+    position: static;
+    width: 100%;
+    display: flex;
   }
   /* Matikan animasi masuk versi desktop, ganti dengan stagger drawer mobile */
   .main-nav > ul > li {
@@ -2412,7 +2486,9 @@ html[data-theme="dark"] .dev-link-github:hover {
     width: 100%;
     justify-content: space-between;
     padding: 14px 16px;
-    color: var(--ink);
+    /* Gunakan var(--text) yang di light mode = #2a2a2a (gelap, kontras di cream)
+       dan di dark mode = #e9e6da (terang, kontras di cream gelap #15211c) */
+    color: var(--text);
     border-radius: 12px;
     border-left: 3px solid transparent;
     transition:
@@ -2420,17 +2496,28 @@ html[data-theme="dark"] .dev-link-github:hover {
       color 0.25s var(--ease),
       border-color 0.25s var(--ease),
       transform 0.25s var(--ease);
+    /* Override !important dari desktop fix di atas untuk konteks drawer */
+    font-size: 1rem;
   }
   .nav-link::after {
     display: none;
   }
   .nav-link:hover {
     transform: translateX(2px);
+    color: var(--gold) !important;
   }
   .nav-link.active {
-    color: var(--ink);
+    color: var(--gold) !important;
     border-left-color: var(--gold);
     background-color: rgba(201, 162, 39, 0.1);
+  }
+  /* Override header color fix khusus untuk .main-nav mobile drawer */
+  .main-nav .nav-link {
+    color: var(--text) !important;
+  }
+  .main-nav .nav-link:hover,
+  .main-nav .nav-link.active {
+    color: var(--gold) !important;
   }
 
   .dropdown-menu {

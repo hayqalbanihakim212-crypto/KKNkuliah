@@ -188,6 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const navClose = document.getElementById("main-nav-close");
   const navLinks = document.querySelectorAll(".main-nav a.nav-link");
 
+  const siteHeaderEl = document.getElementById("site-header");
+
   function openMobileNav() {
     if (!navMenu) return;
     navMenu.classList.add("active");
@@ -197,6 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
       menuToggle.classList.add("active");
       menuToggle.setAttribute("aria-expanded", "true");
     }
+    // Fallback untuk browser tanpa dukungan :has(): pastikan header (yang
+    // membungkus drawer .main-nav) naik di atas .nav-backdrop saat drawer aktif,
+    // supaya drawer tidak ikut "ketutup" blur dan tetap bisa diklik.
+    if (siteHeaderEl) siteHeaderEl.classList.add("nav-open");
     document.body.style.overflow = "hidden";
   }
 
@@ -208,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
       menuToggle.classList.remove("active");
       menuToggle.setAttribute("aria-expanded", "false");
     }
+    if (siteHeaderEl) siteHeaderEl.classList.remove("nav-open");
     document.body.style.overflow = "";
 
     const openDropdown = document.querySelector(".has-dropdown.open");
@@ -507,126 +514,189 @@ document.addEventListener("DOMContentLoaded", function () {
      ========================================= */
   const dataDivisi = {
     ketua: {
-      nama: "Ketua",
       gambar: "png/ketua.jpeg",
-      anggota: [{ peran: "Ketua", nama: "Fathur Rahman", foto: "", ig: "" }],
+      anggota: [
+        {
+          peran: "Ketua",
+          nama: "Fathur Rahman An Naufal",
+          foto: "png/keanggotaan/fatur.jpeg",
+          ig: "https://www.instagram.com/fathurannaufal_?igsh=cmg5amlsaHh1aXo3",
+        },
+      ],
     },
     sekretaris: {
-      nama: "Sekretaris",
       gambar: "png/sekretaris.jpeg",
       anggota: [
-        { peran: "Sekretaris 1", nama: "Hayqal", foto: "", ig: "" },
-        { peran: "Sekretaris 2", nama: "Afriza", foto: "", ig: "" },
+        {
+          peran: "Sekretaris 1",
+          nama: "Muhammad Hayqal Bani Hakim Tanjung",
+          foto: "png/keanggotaan/qal.jpeg",
+          ig: "https://www.instagram.com/qarlbanihakim?igsh=OG05bmEyczZ4ZHNi",
+        },
+        {
+          peran: "Sekretaris 2",
+          nama: "Afriza Br. Harahap",
+          foto: "png/keanggotaan/riza.jpeg",
+          ig: "https://www.instagram.com/rizhrp04?utm_source=qr&igsh=MTV0aGpuZm1oM2x0Zg==",
+        },
       ],
     },
     bendahara: {
-      nama: "Bendahara",
       gambar: "png/bendahara.jpeg",
       anggota: [
-        { peran: "Bendahara 1", nama: "Afriya", foto: "", ig: "" },
+        {
+          peran: "Bendahara 1",
+          nama: "Avria Damayani",
+          foto: "png/keanggotaan/avria.jpeg",
+          ig: "⁠https://www.instagram.com/avria.damayani?igsh=NzdraTE3cWFreml4&utm_source=qr",
+        },
         {
           peran: "Bendahara 2",
-          nama: "Aisyah",
-          foto: "",
+          nama: "Siti Aisyah",
+          foto: "png/keanggotaan/siti.jpeg",
           ig: "https://www.instagram.com/sitiaisaa__?igsh=OGJtZ3F6ZXMzczFk",
         },
       ],
     },
     acara: {
-      nama: "Bidang Acara",
       gambar: "png/acara.jpeg",
       anggota: [
-        { nama: "Dafa Aulia", foto: "", ig: "" },
         {
-          nama: "Hanin",
-          foto: "",
+          nama: "Dhafa Aulia",
+          foto: "png/keanggotaan/dapa.jpeg",
+          ig: "https://www.instagram.com/dhfaulia27?igsh=dWRmbWI2cjZldXc5&utm_source=qr",
+        },
+        {
+          nama: "M.Pryansyah",
+          foto: "png/keanggotaan/priansyah.jpeg",
+          ig: "⁠https://www.instagram.com/mhd_prians?igsh=MWNmOTN2eWVkbDUwNA%3D%3D&utm_source=qr",
+        },
+        {
+          nama: "Fathiyah Hanin Munthe",
+          foto: "png/keanggotaan/fatia.jpeg",
           ig: "https://www.instagram.com/haninmunthee_?igsh=MWtvdHJxY25keDd6dw==",
         },
-        { nama: "Alya", foto: "", ig: "" },
         {
-          nama: "Khadifa",
-          foto: "",
+          nama: "Viani Alya Mayshara",
+          foto: "png/keanggotaan/alya.jpeg",
+          ig: "https://www.instagram.com/viaramaysha?igsh=ZmVrNjd3ZGV6YnN4",
+        },
+        {
+          nama: "Khadifa Maissy Tanjung",
+          foto: "png/keanggotaan/dipa.jpeg",
           ig: "https://www.instagram.com/khdffamssy_?igsh=MTFiNHh4ZXVsNmt2aA==",
         },
-        { nama: "Saripah Aini", foto: "", ig: "" },
+        {
+          nama: "Saripah Aini",
+          foto: "png/keanggotaan/sarifa.jpeg",
+          ig: "https://www.instagram.com/syaaii16?igsh=MWNtOGd3OWIxa3U3OA==",
+        },
       ],
     },
     humas: {
-      nama: "Bidang Humas",
       gambar: "png/humas.jpeg",
       anggota: [
         {
-          nama: "Amru",
-          foto: "",
+          nama: "M. Harianda Amru",
+          foto: "png/keanggotaan/amru.jpeg",
           ig: "https://www.instagram.com/muhammadamru_13?igsh=bzZ5MmRlcGdtdHM3",
         },
         {
-          nama: "Uswah",
-          foto: "",
+          nama: "Uswatun Hasanah",
+          foto: "png/keanggotaan/uswa.jpeg",
           ig: "https://www.instagram.com/uswh_hsn?igsh=Y25laTZxZjF5NG5u",
         },
         {
-          nama: "Dhabita",
-          foto: "",
+          nama: "Dhabita Syazanatara",
+          foto: "png/keanggotaan/dhabita.jpeg",
           ig: "https://www.instagram.com/dhabita_s?igsh=MWRkbGV1MTRkcTdiMg==",
         },
         {
-          nama: "Saskia",
-          foto: "",
+          nama: "Saskiya Nur Yashifa",
+          foto: "png/keanggotaan/saskia.jpeg",
           ig: "https://www.instagram.com/saskianryshfa?igsh=MTk3NHJpMHl3c29vNA==",
         },
       ],
     },
     konsumsi: {
-      nama: "Bidang Konsumsi",
       gambar: "png/konsumsi.jpeg",
       anggota: [
         {
-          nama: "Emmi",
-          foto: "",
+          nama: "Emmi Saidatul Khairi",
+          foto: "png/keanggotaan/emi.jpeg",
           ig: "https://www.instagram.com/emmikhairi?igsh=aGx2czNmODZvbnY3",
         },
-        { nama: "Ardelia", foto: "", ig: "" },
         {
-          nama: "Sella",
-          foto: "",
+          nama: "Ardelia Maheswari Faustina",
+          foto: "png/keanggotaan/adel.jpeg",
+          ig: "https://www.instagram.com/rotioverthinker_?igsh=MWozNW4ybnpmbXFjZw==",
+        },
+        {
+          nama: "Marsella Simanjuntak",
+          foto: "png/keanggotaan/sella.jpeg",
           ig: "https://www.instagram.com/sella_smnjntk?igsh=eXBxb3Y3MWU2YXY2",
         },
-        { nama: "Dina", foto: "", ig: "" },
-        { nama: "Nur Riadoh Rangkuti", foto: "", ig: "" },
-        { nama: "Elysa Rahmayani", foto: "", ig: "" },
+        {
+          nama: "Dina Rahmita",
+          foto: "png/keanggotaan/dina.jpeg",
+          ig: "https://www.instagram.com/youronlymyta?igsh=MTVuOXNkeW5udng1Yw==",
+        },
+        {
+          nama: "Nur Riadoh Rangkuti",
+          foto: "png/keanggotaan/nurangkuti.jpeg",
+          ig: "⁠https://www.instagram.com/nurriadohrangkuti_?igsh=MTBwbW03Z2R5ejZmbQ==",
+        },
+        { nama: "Elysa Rahmayani", foto: "png/keanggotaan/elsa.jpeg", ig: "" },
       ],
     },
     pdd: {
-      nama: "Bidang PDD",
       gambar: "png/pdd.jpeg",
       anggota: [
-        { nama: "Tri Alya", foto: "", ig: "" },
         {
-          nama: "Sofiya",
-          foto: "",
+          nama: "Tri Alya Prasita Devi",
+          foto: "png/keanggotaan/tembung.jpeg",
+          ig: "https://www.instagram.com/alyak.tri?igsh=djU5bTRhYjllbGxn",
+        },
+        {
+          nama: "Shofiiya Naailah",
+          foto: "png/keanggotaan/sofi.jpeg",
           ig: "https://www.instagram.com/sofnay_05?igsh=b3NkY3AwcHhrNnBj",
         },
       ],
     },
     perlengkapan: {
-      nama: "Bidang Perlengkapan",
       gambar: "png/perlengkapan.jpeg",
       anggota: [
         {
-          nama: "Aripin",
-          foto: "",
+          nama: "Mhd Arifin Hasibuan",
+          foto: "png/keanggotaan/arifin.jpeg",
           ig: "https://www.instagram.com/arifinhasibuan18?igsh=MTJrZTQwYXU3Z2g2Zg%3D%3D&utm_source=qr&wa_status_inline=true",
         },
-        { nama: "Fahri", foto: "", ig: "" },
-        { nama: "Ahmad", foto: "", ig: "" },
-        { nama: "Priansyah", foto: "", ig: "" },
         {
-          nama: "Intan",
-          foto: "",
+          nama: "M. Fahri Manurung",
+          foto: "png/keanggotaan/fahri.jpeg",
+          ig: "https://www.instagram.com/koiiii678?igsh=aWt3eTBpdDR2cDV3",
+        },
+        {
+          nama: "Ahmad Huzaifah Tanjung",
+          foto: "png/keanggotaan/ahmad.jpeg",
+          ig: "https://www.instagram.com/thenjunggg?igsh=a215Z2h0YTF3djJ0",
+        },
+        {
+          nama: "M.Rizky Fazlim Yusran",
+          foto: "png/keanggotaan/fazlim.jpeg",
+          ig: "https://www.instagram.com/fazliimm_10?igsh=M3BsbTZ5OTE0dnd1 ",
+        },
+        {
+          nama: "Intan Sufikana Zahra",
+          foto: "png/keanggotaan/intan.jpeg",
           ig: "https://www.instagram.com/intansufiza_?igsh=M2R0N2t4OWhhdDdi",
         },
-        { nama: "Aulia Rahmadina", foto: "", ig: "" },
+        {
+          nama: "Aulia Rachmadina",
+          foto: "png/keanggotaan/aulia.jpeg",
+          ig: "https://www.instagram.com/auliaarhdn?igsh=MTlwazEwa2w3a2J0eg==",
+        },
       ],
     },
   };
@@ -649,6 +719,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalNextBtn = document.getElementById("modal-next-btn");
   const modalDivisiImg = document.getElementById("modal-divisi-img");
   const modalDivisiTitle = document.getElementById("modal-divisi-title");
+  const modalDivisiEyebrow = document.getElementById("modal-divisi-eyebrow");
   const modalAnggotaList = document.getElementById("modal-anggota-list");
   const dropdownItems = document.querySelectorAll(".dropdown-item");
   const strukturCtaBtn = document.getElementById("struktur-cta-btn");
@@ -671,6 +742,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </svg>`;
 
   function renderDaftarAnggota(anggotaList) {
+    if (!modalAnggotaList) return;
     modalAnggotaList.innerHTML = "";
 
     anggotaList.forEach(function (orang, index) {
@@ -747,11 +819,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     divisiAktif = kunciDivisi;
 
-    modalDivisiImg.src = divisi.gambar;
-    modalDivisiImg.alt = divisi.nama;
-    modalDivisiTitle.textContent = divisi.nama;
-
-    renderDaftarAnggota(divisi.anggota);
+    if (modalDivisiImg) {
+      modalDivisiImg.src = divisi.gambar;
+      modalDivisiImg.alt = divisi.nama;
+    }
+    if (modalDivisiTitle) {
+      modalDivisiTitle.textContent = divisi.nama;
+    }
+    // Isi eyebrow dengan label divisi — sebelumnya tidak di-update sehingga
+    // selalu menampilkan teks default "Divisi" dan memunculkan error di console
+    if (modalDivisiEyebrow) {
+      modalDivisiEyebrow.textContent = divisi.nama;
+    }
+    if (modalAnggotaList) {
+      renderDaftarAnggota(divisi.anggota);
+    }
 
     strukturModal.classList.add("active");
     strukturModal.setAttribute("aria-hidden", "false");
@@ -779,8 +861,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const kunciDivisi = item.getAttribute("data-divisi");
       bukaModalDivisi(kunciDivisi);
 
+      // Guard null untuk strukturDropdown DAN strukturToggle secara terpisah
+      // agar tidak throw "Cannot read properties of null" di console
       if (strukturDropdown) {
         strukturDropdown.classList.remove("open");
+      }
+      if (strukturToggle) {
         strukturToggle.setAttribute("aria-expanded", "false");
       }
     });
