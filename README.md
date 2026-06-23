@@ -1,4 +1,5 @@
-# Website KKN Kuliah
-Website profil dan sistem pengaduan masyarakat.
-## Tautan Akses
-* [Beranda / Home](https://hayqalbanihakim212-crypto.github.io/KKNkuliah/kodePokok/home.html)
+# KKN 2026 — Desa Tiga Beringin
+
+Website profil Desa Tiga Beringin untuk program KKN 2026.
+
+🔗 **Demo:** https://hayqalbanihakim212-crypto.github.io/KKNkuliah/kodePokok/home.html
