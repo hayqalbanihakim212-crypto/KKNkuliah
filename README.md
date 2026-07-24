@@ -43,10 +43,15 @@
 
 ## 📁 Struktur File
 KKNkuliah/
+
 └── kodePokok/
+
 ├── home.html # Halaman utama
+
 ├── style.css # Stylesheet
+
 ├── js.js # JavaScript
+
 └── png/ # Aset gambar & logo
 
 ---
