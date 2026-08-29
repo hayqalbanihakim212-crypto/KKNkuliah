@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   /* =========================================
      0. MODE GELAP (DARK MODE)
-     Disimpan di localStorage supaya pilihan
-     pengguna tetap diingat saat kembali ke situs.
      ========================================= */
   const THEME_STORAGE_KEY = "kkn2026-theme";
   const themeToggleBtn = document.getElementById("theme-toggle");
@@ -14,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       htmlEl.removeAttribute("data-theme");
     }
-    // Update aria-label tombol agar pembaca layar tahu kondisi aktif
     if (themeToggleBtn) {
       themeToggleBtn.setAttribute(
         "aria-label",
@@ -27,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
       if (saved === "dark" || saved === "light") return saved;
-    } catch (e) {
-      // localStorage mungkin diblokir (mode privat dsb) — abaikan saja
-    }
+    } catch (e) {}
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -45,42 +40,30 @@ document.addEventListener("DOMContentLoaded", function () {
       applyTheme(currentTheme);
       try {
         window.localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
-      } catch (e) {
-        // abaikan jika localStorage tidak tersedia
-      }
+      } catch (e) {}
     });
   }
 
   /* =========================================
      1. MESIN SCROLL TERPADU
-     (header auto-hide, parallax hero, progress
-     bar, tombol kembali ke atas — digabung jadi
-     satu listener ber-rAF supaya ringan)
      ========================================= */
   const siteHeader = document.getElementById("site-header");
   const heroSection = document.getElementById("beranda");
   const heroContour = document.querySelector(".hero-contour");
-  const heroContent = document.querySelector(".hero-content");
   const scrollProgressEl = document.getElementById("scroll-progress");
   const backToTopBtn = document.getElementById("back-to-top");
 
   let lastScrollY = window.scrollY;
   let scrollFrameQueued = false;
-  const HIDE_THRESHOLD = 80; // mulai auto-hide setelah scroll sejauh ini
+  const HIDE_THRESHOLD = 80;
 
   function updateHeaderState(currentScrollY) {
     if (!siteHeader) return;
-
-    // Background solid setelah sedikit scroll
     if (currentScrollY > 24) {
       siteHeader.classList.add("is-scrolled");
     } else {
       siteHeader.classList.remove("is-scrolled");
     }
-
-    // Auto-hide: sembunyikan hanya jika scroll ke bawah cukup signifikan,
-    // tampilkan lagi begitu user scroll ke atas (selisih kecil diabaikan
-    // supaya header tidak "kedip" hilang-muncul tiap beberapa pixel)
     const scrollDelta = currentScrollY - lastScrollY;
     if (currentScrollY > HIDE_THRESHOLD && scrollDelta > 6) {
       siteHeader.classList.add("is-hidden");
@@ -102,31 +85,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateHeroParallax(currentScrollY) {
     if (!heroSection) return;
-    const heroHeight = heroSection.offsetHeight || 1;
-    const progress = Math.min(currentScrollY / heroHeight, 1);
-
-    // Garis kontur bergerak lebih lambat dari scroll (efek kedalaman)
     if (heroContour) {
       heroContour.style.setProperty(
         "--parallax-offset",
         (currentScrollY * 0.18).toFixed(1) + "px",
       );
     }
-
-    // Catatan: efek fade/transform inline pada .hero-content sudah
-    // DIHAPUS dari sini. Sebelumnya, style ini menimpa langsung
-    // opacity & transform yang sama dipakai oleh elemen [data-reveal]
-    // / .reveal di dalam hero (judul, deskripsi, tombol) — sehingga
-    // begitu kamu scroll naik/turun melewati hero, konten yang sudah
-    // "is-visible" jadi terlihat redup/hilang lagi karena inline
-    // style ini menang dari CSS transition reveal. Kalau nanti mau
-    // efek fade hero lagi, terapkan di elemen LAIN (bukan
-    // .hero-content), misalnya wrapper terpisah yang tidak dipakai
-    // sistem reveal.
   }
 
   const ringProgressEl = document.querySelector(".ring-progress");
-  const RING_CIRCUMFERENCE = 131.95; // 2 * PI * r(21), sudah cocok dengan stroke-dasharray di CSS
+  const RING_CIRCUMFERENCE = 131.95;
 
   function updateBackToTop(currentScrollY) {
     if (!backToTopBtn) return;
@@ -135,8 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       backToTopBtn.classList.remove("is-visible");
     }
-
-    // Isi cincin emas di sekeliling tombol sesuai persentase scroll halaman
     if (ringProgressEl) {
       const scrollableHeight =
         document.documentElement.scrollHeight - window.innerHeight;
@@ -151,12 +117,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleScrollFrame() {
     const currentScrollY = window.scrollY;
-
     updateHeaderState(currentScrollY);
     updateScrollProgress();
     updateHeroParallax(currentScrollY);
     updateBackToTop(currentScrollY);
-
     lastScrollY = currentScrollY;
     scrollFrameQueued = false;
   }
@@ -168,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Jalankan sekali di awal supaya state langsung sesuai posisi scroll saat ini
   handleScrollFrame();
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
@@ -187,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const navBackdrop = document.getElementById("nav-backdrop");
   const navClose = document.getElementById("main-nav-close");
   const navLinks = document.querySelectorAll(".main-nav a.nav-link");
-
   const siteHeaderEl = document.getElementById("site-header");
 
   function openMobileNav() {
@@ -199,9 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
       menuToggle.classList.add("active");
       menuToggle.setAttribute("aria-expanded", "true");
     }
-    // Fallback untuk browser tanpa dukungan :has(): pastikan header (yang
-    // membungkus drawer .main-nav) naik di atas .nav-backdrop saat drawer aktif,
-    // supaya drawer tidak ikut "ketutup" blur dan tetap bisa diklik.
     if (siteHeaderEl) siteHeaderEl.classList.add("nav-open");
     document.body.style.overflow = "hidden";
   }
@@ -216,229 +175,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (siteHeaderEl) siteHeaderEl.classList.remove("nav-open");
     document.body.style.overflow = "";
-
     const openDropdown = document.querySelector(".has-dropdown.open");
-    if (openDropdown) {
-      openDropdown.classList.remove("open");
-      const toggleBtn = openDropdown.querySelector(".dropdown-toggle");
-      if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
+    if (openDropdown) openDropdown.classList.remove("open");
+    const openToggle = document.querySelector("[aria-expanded='true']");
+    if (openToggle && openToggle !== menuToggle) {
+      openToggle.setAttribute("aria-expanded", "false");
     }
   }
 
-  if (menuToggle && navMenu) {
+  if (menuToggle) {
     menuToggle.addEventListener("click", function () {
-      const isOpen = navMenu.classList.contains("active");
-      if (isOpen) {
+      if (navMenu && navMenu.classList.contains("active")) {
         closeMobileNav();
       } else {
         openMobileNav();
       }
     });
-
-    if (navClose) {
-      navClose.addEventListener("click", closeMobileNav);
-    }
-    if (navBackdrop) {
-      navBackdrop.addEventListener("click", closeMobileNav);
-    }
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeMobileNav();
-    });
-
-    navLinks.forEach(function (link) {
-      link.addEventListener("click", function () {
-        closeMobileNav();
-      });
-    });
   }
+  if (navClose) navClose.addEventListener("click", closeMobileNav);
+  if (navBackdrop) navBackdrop.addEventListener("click", closeMobileNav);
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", closeMobileNav);
+  });
 
   /* =========================================
-     2B. NAV-PILL & SCROLLSPY
-     (pil emas meluncur ke tautan yang aktif
-     sesuai posisi scroll halaman, plus efek
-     hover mengikuti kursor)
+     3. DROPDOWN MENU (DESKTOP)
      ========================================= */
-  const navPill = document.getElementById("nav-pill");
-  const navListEl = document.querySelector(".main-nav > ul");
-  const navLinkEls = document.querySelectorAll(".main-nav .nav-link");
-  const spySections = document.querySelectorAll("main > section[id]");
+  const strukturDropdown = document.querySelector(".has-dropdown");
+  const strukturToggle = document.getElementById("struktur-toggle");
+  const strukturMenu = document.getElementById("struktur-menu");
 
-  function movePillTo(targetEl) {
-    if (!navPill || !navListEl || !targetEl) return;
-    const listRect = navListEl.getBoundingClientRect();
-    const targetRect = targetEl.getBoundingClientRect();
-    navPill.style.width = targetRect.width + "px";
-    navPill.style.transform =
-      "translateX(" + (targetRect.left - listRect.left) + "px)";
-    navPill.classList.add("is-active");
-  }
-
-  function hidePill() {
-    if (!navPill) return;
-    navPill.classList.remove("is-active");
-  }
-
-  // Hover: pil mengikuti tautan yang disentuh kursor
-  navLinkEls.forEach(function (link) {
-    link.addEventListener("mouseenter", function () {
-      movePillTo(link);
-    });
-  });
-  if (navListEl) {
-    navListEl.addEventListener("mouseleave", function () {
-      const activeLink = document.querySelector(".nav-link.active");
-      if (activeLink && window.innerWidth > 768) {
-        movePillTo(activeLink);
+  if (strukturDropdown && strukturToggle && strukturMenu) {
+    strukturToggle.addEventListener("click", function () {
+      const isOpen = strukturDropdown.classList.contains("open");
+      strukturDropdown.classList.toggle("open");
+      strukturToggle.setAttribute("aria-expanded", !isOpen);
+      if (!isOpen) {
+        window.addEventListener("click", closeDropdownOnClickOutside);
       } else {
-        hidePill();
+        window.removeEventListener("click", closeDropdownOnClickOutside);
       }
     });
+
+    function closeDropdownOnClickOutside(event) {
+      if (!strukturDropdown.contains(event.target)) {
+        strukturDropdown.classList.remove("open");
+        strukturToggle.setAttribute("aria-expanded", "false");
+        window.removeEventListener("click", closeDropdownOnClickOutside);
+      }
+    }
   }
 
-  // Scrollspy: tandai tautan aktif sesuai section yang sedang terlihat
-  function updateActiveNavLink() {
-    if (!spySections.length) return;
-
-    let currentId = spySections[0].id;
-    const scrollPos = window.scrollY + window.innerHeight * 0.35;
-
-    spySections.forEach(function (section) {
-      if (section.offsetTop <= scrollPos) {
-        currentId = section.id;
-      }
+  // Stagger index dropdown items
+  (function () {
+    const items = document.querySelectorAll(".dropdown-item");
+    items.forEach(function (item, index) {
+      item.style.setProperty("--reveal-i", index);
     });
+  })();
 
-    navLinkEls.forEach(function (link) {
-      const isMatch = link.getAttribute("href") === "#" + currentId;
-      link.classList.toggle("active", isMatch);
-      if (isMatch && window.innerWidth > 768) {
-        movePillTo(link);
-      }
-    });
-  }
-
-  window.addEventListener("scroll", updateActiveNavLink, { passive: true });
-  window.addEventListener("resize", updateActiveNavLink, { passive: true });
-  updateActiveNavLink();
-
-  /* =========================================
-     3B. EFEK TILT 3D + KILAU KURSOR
-     (program-card & gallery-tile sudah punya
-     CSS untuk --mx/--my dan class is-tilting,
-     di sini kita hidupkan lewat mousemove)
-     ========================================= */
-  const tiltTargets = document.querySelectorAll(".program-card, .gallery-tile");
-  const MAX_TILT = 8; // derajat kemiringan maksimum
-
-  tiltTargets.forEach(function (card) {
-    card.addEventListener("mouseenter", function () {
-      card.classList.add("is-tilting");
-    });
-
-    card.addEventListener("mousemove", function (event) {
-      const rect = card.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width; // 0..1
-      const py = (event.clientY - rect.top) / rect.height; // 0..1
-
-      // Posisi kilau cahaya mengikuti kursor
-      card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-      card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-
-      // Kemiringan 3D ringan menuju arah kursor
-      const tiltX = (py - 0.5) * -MAX_TILT;
-      const tiltY = (px - 0.5) * MAX_TILT;
-      card.style.transform =
-        "perspective(1400px) rotateX(" +
-        tiltX.toFixed(2) +
-        "deg) rotateY(" +
-        tiltY.toFixed(2) +
-        "deg) translateY(-4px)";
-    });
-
-    card.addEventListener("mouseleave", function () {
-      card.classList.remove("is-tilting");
-      card.style.transform = "";
-    });
-  });
-
-  /* =========================================
-     3C. MAGNETIC BUTTON
-     (tombol .btn-solid & .btn-ghost sedikit
-     "tertarik" mengikuti kursor saat di-hover)
-     ========================================= */
-  const magneticButtons = document.querySelectorAll(".btn");
-  const MAGNET_STRENGTH = 0.25;
-
-  magneticButtons.forEach(function (btn) {
-    btn.addEventListener("mousemove", function (event) {
-      const rect = btn.getBoundingClientRect();
-      const offsetX = event.clientX - (rect.left + rect.width / 2);
-      const offsetY = event.clientY - (rect.top + rect.height / 2);
-      btn.style.transform =
-        "translate(" +
-        (offsetX * MAGNET_STRENGTH).toFixed(1) +
-        "px, " +
-        (offsetY * MAGNET_STRENGTH - 3).toFixed(1) +
-        "px)";
-    });
-    btn.addEventListener("mouseleave", function () {
-      btn.style.transform = "";
-    });
-  });
-
-  /* =========================================
-     3D. AURORA GLOW MENGIKUTI KURSOR DI HERO
-     ========================================= */
-  const heroAuroraTarget = document.getElementById("beranda");
-  if (heroAuroraTarget) {
-    heroAuroraTarget.addEventListener("mousemove", function (event) {
-      const rect = heroAuroraTarget.getBoundingClientRect();
-      const px = ((event.clientX - rect.left) / rect.width) * 100;
-      const py = ((event.clientY - rect.top) / rect.height) * 100;
-      heroAuroraTarget.style.setProperty("--cursor-x", px.toFixed(1) + "%");
-      heroAuroraTarget.style.setProperty("--cursor-y", py.toFixed(1) + "%");
-    });
-  }
-
-  /* =========================================
-     3E. SCROLL REVEAL (RINGAN, SATU OBSERVER)
-     ========================================= */
-
-  // --- Pecah teks .section-title jadi per-kata dibungkus
-  //     word-mask/word-inner, supaya CSS bisa menganimasikan
-  //     tiap kata "naik" satu-satu dari balik mask saat tampil.
-  const sectionTitles = document.querySelectorAll(".section-title");
-  sectionTitles.forEach(function (title) {
-    // Lindungi dari proses ganda jika fungsi ini terpanggil lebih dari sekali
-    if (title.dataset.split === "true") return;
-    title.dataset.split = "true";
-
-    const teksAsli = title.textContent;
-    const kataKata = teksAsli.trim().split(/\s+/);
-
-    title.innerHTML = "";
-    kataKata.forEach(function (kata, index) {
-      const mask = document.createElement("span");
-      mask.className = "word-mask";
-
-      const inner = document.createElement("span");
-      inner.className = "word-inner";
-      inner.style.setProperty("--word-i", index);
-      inner.textContent = kata;
-
-      mask.appendChild(inner);
-      title.appendChild(mask);
-
-      // Spasi antar kata (di luar mask supaya tidak ikut "terangkat")
-      if (index < kataKata.length - 1) {
-        title.appendChild(document.createTextNode(" "));
-      }
-    });
-  });
-
-  // --- Beri index stagger otomatis (var(--reveal-i)) untuk tiap
-  //     grup kartu/galeri, supaya kemunculannya satu-satu berurutan
-  //     bukan langsung serentak bersamaan.
+  // Stagger untuk carousel & galeri
   function pasangStaggerIndex(groupSelector, itemSelector) {
     document.querySelectorAll(groupSelector).forEach(function (group) {
       const items = group.querySelectorAll(itemSelector);
@@ -447,261 +243,584 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-  pasangStaggerIndex(".card-grid", ".program-card");
+  pasangStaggerIndex(".proker-carousel-track", ".program-card");
   pasangStaggerIndex(".gallery-grid", ".gallery-tile");
+  pasangStaggerIndex(".neo-gallery", ".gallery-tile");
+  pasangStaggerIndex(".program-grid", ".neo-program-card");
+  pasangStaggerIndex(".doc-grid", ".doc-card");
 
-  // --- Satu IntersectionObserver dipakai bersama untuk semua target:
-  //     section-inner, kartu, galeri, .reveal polos, dan [data-reveal]
-  //     (termasuk varian left/right/zoom/blur/flip/pop) serta judul
-  //     section yang baru saja dipecah jadi word-mask di atas.
-  const revealTargets = document.querySelectorAll(
-    ".section-inner, .program-card, .gallery-tile, .reveal, [data-reveal], .section-title",
-  );
+  /* =========================================
+     4. PROKER CAROUSEL INLINE
+     ========================================= */
+  (function () {
+    var track = document.getElementById("proker-car-track");
+    var prevBtn = document.getElementById("proker-car-prev");
+    var nextBtn = document.getElementById("proker-car-next");
+    var dotsWrap = document.getElementById("proker-car-dots");
+    if (!track) return;
 
-  const revealObserver = new IntersectionObserver(
-    function (entries, observer) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+    var cards = track.querySelectorAll(".program-card");
+    var totalCards = cards.length;
+    var currentIdx = 0;
+
+    function perPage() {
+      var w = window.innerWidth;
+      if (w <= 600) return 1;
+      if (w <= 900) return 2;
+      return 3;
+    }
+    function maxIdx() {
+      return Math.max(0, totalCards - perPage());
+    }
+    function renderDots() {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = "";
+      var total = maxIdx() + 1;
+      for (var i = 0; i < total; i++) {
+        var dot = document.createElement("button");
+        dot.className =
+          "proker-carousel-dot" + (i === currentIdx ? " active" : "");
+        dot.setAttribute("aria-label", "Ke slide " + (i + 1));
+        dot.setAttribute("type", "button");
+        (function (idx) {
+          dot.addEventListener("click", function () {
+            goTo(idx);
+          });
+        })(i);
+        dotsWrap.appendChild(dot);
+      }
+    }
+    function updateDots() {
+      if (!dotsWrap) return;
+      dotsWrap
+        .querySelectorAll(".proker-carousel-dot")
+        .forEach(function (d, i) {
+          d.classList.toggle("active", i === currentIdx);
+        });
+    }
+    function updateButtons() {
+      if (prevBtn) prevBtn.classList.toggle("is-disabled", currentIdx === 0);
+      if (nextBtn)
+        nextBtn.classList.toggle("is-disabled", currentIdx >= maxIdx());
+    }
+    function goTo(idx) {
+      currentIdx = Math.max(0, Math.min(idx, maxIdx()));
+      var gap = 28;
+      var cardW =
+        (track.getBoundingClientRect().width - gap * (perPage() - 1)) /
+        perPage();
+      track.style.transform =
+        "translateX(-" + currentIdx * (cardW + gap) + "px)";
+      updateDots();
+      updateButtons();
+    }
+    if (prevBtn)
+      prevBtn.addEventListener("click", function () {
+        goTo(currentIdx - 1);
+      });
+    if (nextBtn)
+      nextBtn.addEventListener("click", function () {
+        goTo(currentIdx + 1);
+      });
+
+    var dragStart = null;
+    var dragOrigin = 0;
+    track.addEventListener("mousedown", function (e) {
+      dragStart = e.clientX;
+      dragOrigin = currentIdx;
+      track.classList.add("is-dragging");
+    });
+    window.addEventListener("mousemove", function (e) {
+      if (dragStart === null) return;
+      var diff = e.clientX - dragStart;
+      var gap = 28;
+      var cardW =
+        (track.getBoundingClientRect().width - gap * (perPage() - 1)) /
+        perPage();
+      var base = dragOrigin * (cardW + gap);
+      track.style.transform = "translateX(-" + (base - diff) + "px)";
+    });
+    window.addEventListener("mouseup", function (e) {
+      if (dragStart === null) return;
+      var diff = e.clientX - dragStart;
+      var cardW =
+        (track.getBoundingClientRect().width - 28 * (perPage() - 1)) /
+        perPage();
+      if (Math.abs(diff) > cardW * 0.25) {
+        goTo(diff < 0 ? dragOrigin + 1 : dragOrigin - 1);
+      } else {
+        goTo(dragOrigin);
+      }
+      dragStart = null;
+      track.classList.remove("is-dragging");
+    });
+    track.addEventListener(
+      "touchstart",
+      function (e) {
+        dragStart = e.touches[0].clientX;
+        dragOrigin = currentIdx;
+      },
+      { passive: true },
+    );
+    track.addEventListener(
+      "touchend",
+      function (e) {
+        if (dragStart === null) return;
+        var diff = e.changedTouches[0].clientX - dragStart;
+        var cardW =
+          (track.getBoundingClientRect().width - 28 * (perPage() - 1)) /
+          perPage();
+        if (Math.abs(diff) > cardW * 0.25) {
+          goTo(diff < 0 ? dragOrigin + 1 : dragOrigin - 1);
+        } else {
+          goTo(dragOrigin);
         }
+        dragStart = null;
+      },
+      { passive: true },
+    );
+    window.addEventListener(
+      "resize",
+      function () {
+        renderDots();
+        goTo(Math.min(currentIdx, maxIdx()));
+      },
+      { passive: true },
+    );
+    renderDots();
+    updateButtons();
+  })();
+
+  /* =========================================
+     5. LAZY LOADING — PERBAIKAN MODEL
+     
+     Menggunakan IntersectionObserver TERPISAH
+     untuk tiga fungsi berbeda:
+     
+     A) lazyImgObserver  → lazy load <img data-src>
+     B) revealObserver   → reveal animasi scroll
+     C) sectionObserver  → section overlap parallax
+     ========================================= */
+
+  // ── A) LAZY IMAGE LOADING ──────────────────────
+  // Semua <img> yang sudah punya loading="lazy" browser
+  // sudah handle native, tapi untuk gambar di dalam
+  // viewport awal atau yang perlu fallback, kita gunakan
+  // observer manual untuk data-src pattern.
+
+  const lazyImgObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+
+        // Jika ada data-src, swap ke src
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          delete img.dataset.src;
+        }
+        // Jika ada data-srcset, swap ke srcset
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          delete img.dataset.srcset;
+        }
+
+        img.classList.add("img-loaded");
+        lazyImgObserver.unobserve(img);
       });
     },
-    { root: null, rootMargin: "0px 0px -60px 0px", threshold: 0.12 },
+    {
+      root: null,
+      rootMargin: "200px 0px 200px 0px", // Pre-load 200px sebelum masuk viewport
+      threshold: 0,
+    },
   );
 
-  revealTargets.forEach(function (el) {
-    // .section-title sengaja TIDAK diberi class umum "reveal" —
-    // animasinya sendiri (word-mask) sudah diatur lewat .is-visible
-    // langsung di CSS [.section-title.is-visible .word-inner].
-    if (!el.classList.contains("section-title")) {
-      el.classList.add("reveal");
+  // Pasang native lazy + observer untuk semua gambar
+  document.querySelectorAll("img").forEach(function (img) {
+    // Tambahkan loading="lazy" jika belum ada
+    if (!img.hasAttribute("loading")) {
+      img.setAttribute("loading", "lazy");
     }
+    // Jika gambar pakai data-src (pattern lazy manual), observe
+    if (img.dataset.src) {
+      lazyImgObserver.observe(img);
+    }
+    // Tambah kelas img-reveal untuk fade-in
+    img.classList.add("img-reveal");
+    // Jika sudah complete (cache), langsung tampilkan
+    if (img.complete && img.naturalHeight !== 0) {
+      img.classList.add("img-loaded");
+    } else {
+      img.addEventListener("load", function () {
+        img.classList.add("img-loaded");
+      });
+      img.addEventListener("error", function () {
+        img.classList.add("img-error");
+      });
+    }
+  });
+
+  // ── B) SCROLL REVEAL OBSERVER ─────────────────────
+  const revealObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        requestAnimationFrame(function () {
+          entry.target.classList.add("is-visible");
+        });
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    {
+      root: null,
+      rootMargin: "0px 0px -60px 0px",
+      threshold: 0.06,
+    },
+  );
+
+  // Kumpulkan elemen yang perlu di-reveal
+  const revealedSet = new WeakSet();
+
+  // Section-title: animasi word-by-word → split per kata
+  document
+    .querySelectorAll(".section-title:not([data-split-done])")
+    .forEach(function (el) {
+      const words = el.innerHTML.split(/(\s+)/);
+      el.innerHTML = words
+        .map(function (word, i) {
+          if (word.trim() === "") return word;
+          return (
+            '<span class="word-mask"><span class="word-inner" style="--word-i:' +
+            i +
+            '">' +
+            word +
+            "</span></span>"
+          );
+        })
+        .join("");
+      el.setAttribute("data-split-done", "true");
+      if (!revealedSet.has(el)) {
+        revealedSet.add(el);
+        revealObserver.observe(el);
+      }
+    });
+
+  // Semua elemen dengan [data-reveal] dan class .reveal
+  document.querySelectorAll("[data-reveal], .reveal").forEach(function (el) {
+    if (revealedSet.has(el)) return;
+    revealedSet.add(el);
     revealObserver.observe(el);
   });
 
+  // Elemen tambahan (cards, tiles, section-inner)
+  const extraRevealSelectors = [
+    ".section-inner",
+    ".neo-program-card",
+    ".gallery-tile",
+    ".doc-card",
+    ".timeline-item",
+    ".contact-card",
+    ".faq-item",
+    ".story-card",
+    ".mini-stats div",
+    ".img-card",
+  ];
+
+  document
+    .querySelectorAll(extraRevealSelectors.join(","))
+    .forEach(function (el) {
+      if (revealedSet.has(el)) return;
+      revealedSet.add(el);
+      el.classList.add("reveal");
+      revealObserver.observe(el);
+    });
+
+  // ── C) SECTION OVERLAP / PARALLAX OBSERVER ──────────
+  // Efek smooth overlapping: section berikutnya "naik" dari bawah
+  const sectionObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        const section = entry.target;
+        if (entry.isIntersecting) {
+          section.classList.add("section-entered");
+        }
+        // Paralaks berdasarkan posisi relatif viewport
+        const rect = entry.boundingClientRect;
+        const vp = window.innerHeight;
+        // Progress: 0 saat baru masuk bawah, 1 saat sudah di tengah
+        const progress = Math.max(0, Math.min(1, 1 - rect.top / vp));
+        const parallax = (1 - progress) * 32; // max 32px dari bawah
+        section.style.setProperty("--section-slide", parallax + "px");
+      });
+    },
+    {
+      root: null,
+      rootMargin: "0px 0px 0px 0px",
+      threshold: Array.from({ length: 21 }, function (_, i) {
+        return i * 0.05;
+      }),
+    },
+  );
+
+  document
+    .querySelectorAll(".section, .neo-section, .neo-hero")
+    .forEach(function (el) {
+      sectionObserver.observe(el);
+    });
+
+  // Scrollspy untuk nav-link aktif
+  const navSections = document.querySelectorAll("section[id]");
+  const allNavLinks = document.querySelectorAll(".nav-link[href^='#']");
+  const navPill = document.getElementById("nav-pill");
+
+  const scrollspyObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        allNavLinks.forEach(function (link) {
+          const isActive = link.getAttribute("href") === "#" + id;
+          link.classList.toggle("active", isActive);
+
+          // Animasikan nav-pill
+          if (isActive && navPill && window.innerWidth > 768) {
+            const rect = link.getBoundingClientRect();
+            const parentRect = link.closest("ul").getBoundingClientRect();
+            navPill.style.width = rect.width + "px";
+            navPill.style.transform =
+              "translateX(" + (rect.left - parentRect.left) + "px)";
+            navPill.classList.add("is-active");
+          }
+        });
+      });
+    },
+    {
+      root: null,
+      rootMargin: "-40% 0px -40% 0px",
+      threshold: 0,
+    },
+  );
+
+  navSections.forEach(function (section) {
+    scrollspyObserver.observe(section);
+  });
+
   /* =========================================
-     5. DROPDOWN MENU "STRUKTUR"
+     6. FOOTER BATIK ANIMATION
      ========================================= */
-  const strukturDropdown = document.querySelector(".has-dropdown");
-  const strukturToggle = document.getElementById("struktur-toggle");
-  const strukturMenu = document.getElementById("struktur-menu");
-
-  if (strukturDropdown && strukturToggle && strukturMenu) {
-    strukturToggle.addEventListener("click", function (event) {
-      event.stopPropagation();
-      const isOpen = strukturDropdown.classList.toggle("open");
-      strukturToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  const footerBatik = document.querySelector(".footer-batik");
+  if (footerBatik) {
+    const polygons = footerBatik.querySelectorAll("polygon");
+    polygons.forEach(function (p, i) {
+      p.style.setProperty("--i", i);
     });
+    const footerObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting) {
+          footerBatik.classList.add("is-animated");
+          footerObserver.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    footerObserver.observe(footerBatik);
+  }
 
-    document.addEventListener("click", function (event) {
-      if (!strukturDropdown.contains(event.target)) {
-        strukturDropdown.classList.remove("open");
-        strukturToggle.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        strukturDropdown.classList.remove("open");
-        strukturToggle.setAttribute("aria-expanded", "false");
-      }
+  /* =========================================
+     7. HERO KURSOR CAHAYA
+     ========================================= */
+  const heroEl = document.querySelector(".hero");
+  if (heroEl) {
+    heroEl.addEventListener("mousemove", function (e) {
+      const rect = heroEl.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      heroEl.style.setProperty("--cursor-x", x + "%");
+      heroEl.style.setProperty("--cursor-y", y + "%");
     });
   }
 
   /* =========================================
-     6. MODAL STRUKTUR DIVISI
+     8. TILT 3D CARDS (program-card & gallery-tile)
      ========================================= */
+  function setupTiltCard(selector) {
+    document.querySelectorAll(selector).forEach(function (card) {
+      card.addEventListener("mousemove", function (e) {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.setProperty("--mx", (x + 0.5) * 100 + "%");
+        card.style.setProperty("--my", (y + 0.5) * 100 + "%");
+        card.classList.add("is-tilting");
+        card.style.transform =
+          "perspective(1000px) rotateY(" +
+          (x * 12).toFixed(1) +
+          "deg) rotateX(" +
+          (-y * 8).toFixed(1) +
+          "deg) translateZ(6px)";
+      });
+      card.addEventListener("mouseleave", function () {
+        card.classList.remove("is-tilting");
+        card.style.transform = "";
+      });
+    });
+  }
+  setupTiltCard(".program-card");
+  setupTiltCard(".gallery-tile");
+
+  /* =========================================
+     9. DROPDOWN MENU "STRUKTUR"
+     ========================================= */
+  const strukturCtaBtn = document.getElementById("struktur-cta-btn");
+
   const dataDivisi = {
     ketua: {
-      gambar: "png/ketua.jpeg",
+      nama: "Ketua",
+      gambar: "png/ketua.png",
       anggota: [
         {
+          nama: "Nazwa Aqilla Farhan",
           peran: "Ketua",
-          nama: "Fathur Rahman An Naufal",
-          foto: "png/keanggotaan/fatur.jpeg",
-          ig: "https://www.instagram.com/fathurannaufal_?igsh=cmg5amlsaHh1aXo3",
+          foto: "png/nazwa.png",
+          ig: "https://www.instagram.com/nazwaqf_?igsh=NW5rcHljMWljeGts",
         },
       ],
     },
     sekretaris: {
-      gambar: "png/sekretaris.jpeg",
+      nama: "Sekretaris",
+      gambar: "png/sekretaris.png",
       anggota: [
         {
+          nama: "Devi Ramdani Syahputra",
           peran: "Sekretaris 1",
-          nama: "Muhammad Hayqal Bani Hakim Tanjung",
-          foto: "png/keanggotaan/qal.jpeg",
-          ig: "https://www.instagram.com/qarlbanihakim?igsh=OG05bmEyczZ4ZHNi",
+          foto: "png/devi.png",
+          ig: "https://www.instagram.com/devirs_?igsh=NW5ydHExYWlwMjg5",
         },
         {
+          nama: "Fauziah Muthi",
           peran: "Sekretaris 2",
-          nama: "Afriza Br. Harahap",
-          foto: "png/keanggotaan/riza.jpeg",
-          ig: "https://www.instagram.com/rizhrp04?utm_source=qr&igsh=MTV0aGpuZm1oM2x0Zg==",
+          foto: "png/fauziah.png",
+          ig: "https://www.instagram.com/fauziah.m_?igsh=MXBhYmdmcnN0aWJkeA==",
         },
       ],
     },
     bendahara: {
-      gambar: "png/bendahara.jpeg",
+      nama: "Bendahara",
+      gambar: "png/bendahara.png",
       anggota: [
         {
+          nama: "Annisa Wijaya",
           peran: "Bendahara 1",
-          nama: "Avria Damayani",
-          foto: "png/keanggotaan/avria.jpeg",
-          ig: "https://www.instagram.com/avria.damayani?igsh=NzdraTE3cWFreml4&utm_source=qr",
+          foto: "png/annisa.png",
+          ig: "https://www.instagram.com/annisawijaya22?igsh=MWl6eHMwMHBxdWpn",
         },
         {
+          nama: "Raya Yusfina Rahmadani",
           peran: "Bendahara 2",
-          nama: "Siti Aisyah",
-          foto: "png/keanggotaan/siti.jpeg",
-          ig: "https://www.instagram.com/sitiaisaa__?igsh=OGJtZ3F6ZXMzczFk",
+          foto: "png/raya.png",
+          ig: "https://www.instagram.com/rayayusfina_?igsh=OThxdTM5amhrdHJz",
         },
       ],
     },
     acara: {
-      gambar: "png/acara.jpeg",
+      nama: "Acara",
+      gambar: "png/acara.png",
       anggota: [
         {
-          nama: "Dhafa Aulia",
-          foto: "png/keanggotaan/dapa.jpeg",
-          ig: "https://www.instagram.com/dhfaulia27?igsh=dWRmbWI2cjZldXc5&utm_source=qr",
+          nama: "Muhammad Reza Rahman",
+          peran: "Ketua Divisi",
+          foto: "png/reza.png",
+          ig: "https://www.instagram.com/m.rezarhmn_?igsh=MTg4MzJyOWhrdWtlNA==",
         },
         {
-          nama: "M.Pryansyah",
-          foto: "png/keanggotaan/priansyah.jpeg",
-          ig: "https://www.instagram.com/mhd_prians?igsh=MWNmOTN2eWVkbDUwNA%3D%3D&utm_source=qr",
+          nama: "Nadila Putri Wijaya",
+          peran: "Anggota",
+          foto: "png/nadila.png",
+          ig: "https://www.instagram.com/nadilla_putri_?igsh=MTB2ZHdzZ3h4aWU5",
         },
         {
-          nama: "Fathiyah Hanin Munthe",
-          foto: "png/keanggotaan/fatia.jpeg",
-          ig: "https://www.instagram.com/haninmunthee_?igsh=MWtvdHJxY25keDd6dw==",
-        },
-        {
-          nama: "Viani Alya Mayshara",
-          foto: "png/keanggotaan/alya.jpeg",
-          ig: "https://www.instagram.com/viaramaysha?igsh=ZmVrNjd3ZGV6YnN4",
-        },
-        {
-          nama: "Khadifa Maissy Tanjung",
-          foto: "png/keanggotaan/dipa.jpeg",
-          ig: "https://www.instagram.com/khdffamssy_?igsh=MTFiNHh4ZXVsNmt2aA==",
-        },
-        {
-          nama: "Saripah Aini",
-          foto: "png/keanggotaan/sarifa.jpeg",
-          ig: "https://www.instagram.com/syaaii16?igsh=MWNtOGd3OWIxa3U3OA==",
+          nama: "Muhammad Farrel Anugrah",
+          peran: "Anggota",
+          foto: "png/farrel.png",
+          ig: "https://www.instagram.com/mfarrelandia?igsh=MWNkMnBqczRxMW8zOA==",
         },
       ],
     },
     humas: {
-      gambar: "png/humas.jpeg",
+      nama: "Humas",
+      gambar: "png/humas.png",
       anggota: [
         {
-          nama: "M. Harianda Amru",
-          foto: "png/keanggotaan/amru.jpeg",
-          ig: "https://www.instagram.com/muhammadamru_13?igsh=bzZ5MmRlcGdtdHM3",
+          nama: "Widya Rianda Pratama",
+          peran: "Ketua Divisi",
+          foto: "png/widya.png",
+          ig: "https://www.instagram.com/widyarianda._?igsh=NW1uc2phbW5nd2lt",
         },
         {
-          nama: "Uswatun Hasanah",
-          foto: "png/keanggotaan/uswa.jpeg",
-          ig: "https://www.instagram.com/uswh_hsn?igsh=Y25laTZxZjF5NG5u",
-        },
-        {
-          nama: "Dhabita Syazanatara",
-          foto: "png/keanggotaan/dhabita.jpeg",
-          ig: "https://www.instagram.com/dhabita_s?igsh=MWRkbGV1MTRkcTdiMg==",
-        },
-        {
-          nama: "Saskiya Nur Yashifa",
-          foto: "png/keanggotaan/saskia.jpeg",
-          ig: "https://www.instagram.com/saskianryshfa?igsh=MTk3NHJpMHl3c29vNA==",
+          nama: "Aulia Ardhani",
+          peran: "Anggota",
+          foto: "png/aulia.png",
+          ig: "https://www.instagram.com/auliaarhdn?igsh=MTlwazEwa2w3a2J0eg==",
         },
       ],
     },
     konsumsi: {
-      gambar: "png/konsumsi.jpeg",
+      nama: "Konsumsi",
+      gambar: "png/konsumsi.png",
       anggota: [
         {
-          nama: "Emmi Saidatul Khairi",
-          foto: "png/keanggotaan/emi.jpeg",
-          ig: "https://www.instagram.com/emmikhairi?igsh=aGx2czNmODZvbnY3",
+          nama: "Ayu Mandiri Hapsari",
+          peran: "Ketua Divisi",
+          foto: "png/ayu.png",
+          ig: "https://www.instagram.com/ayumandirih?igsh=MTBjcHdhazVkZmpnOQ==",
         },
         {
-          nama: "Ardelia Maheswari Faustina",
-          foto: "png/keanggotaan/adel.jpeg",
-          ig: "https://www.instagram.com/rotioverthinker_?igsh=MWozNW4ybnpmbXFjZw==",
+          nama: "Nadya Muthia Zahra",
+          peran: "Anggota",
+          foto: "png/nadya.png",
+          ig: "https://www.instagram.com/nadyamuthiazahra?igsh=MTBhOHd5bnpqZWQ3dA==",
         },
-        {
-          nama: "Marsella Simanjuntak",
-          foto: "png/keanggotaan/sella.jpeg",
-          ig: "https://www.instagram.com/sella_smnjntk?igsh=eXBxb3Y3MWU2YXY2",
-        },
-        {
-          nama: "Dina Rahmita",
-          foto: "png/keanggotaan/dina.jpeg",
-          ig: "https://www.instagram.com/youronlymyta?igsh=MTVuOXNkeW5udng1Yw==",
-        },
-        {
-          nama: "Nur Riadoh Rangkuti",
-          foto: "png/keanggotaan/nurangkuti.jpeg",
-          ig: "https://www.instagram.com/nurriadohrangkuti_?igsh=MTBwbW03Z2R5ejZmbQ==",
-        },
-        { nama: "Elysa Rahmayani", foto: "png/keanggotaan/elsa.jpeg", ig: "" },
       ],
     },
     pdd: {
-      gambar: "png/pdd.jpeg",
+      nama: "PDD",
+      gambar: "png/pdd.png",
       anggota: [
         {
-          nama: "Tri Alya Prasita Devi",
-          foto: "png/keanggotaan/tembung.jpeg",
-          ig: "https://www.instagram.com/alyak.tri?igsh=djU5bTRhYjllbGxn",
+          nama: "Eka Wijaya",
+          peran: "Ketua Divisi",
+          foto: "png/eka.png",
+          ig: "https://www.instagram.com/ekawijaya_?igsh=MTJxYWl5Nzd2dXRyeg==",
         },
         {
-          nama: "Shofiiya Naailah",
-          foto: "png/keanggotaan/sofi.jpeg",
-          ig: "https://www.instagram.com/sofnay_05?igsh=b3NkY3AwcHhrNnBj",
+          nama: "Ihsan Syaiful Mursyid",
+          peran: "Anggota",
+          foto: "png/ihsan.png",
+          ig: "https://www.instagram.com/ihsan_mursyidd?igsh=MXA4dmI1ZWluMGQzNQ==",
         },
       ],
     },
     perlengkapan: {
-      gambar: "png/perlengkapan.jpeg",
+      nama: "Perlengkapan",
+      gambar: "png/perlengkapan.png",
       anggota: [
         {
-          nama: "Mhd Arifin Hasibuan",
-          foto: "png/keanggotaan/arifin.jpeg",
-          ig: "https://www.instagram.com/arifinhasibuan18?igsh=MTJrZTQwYXU3Z2g2Zg%3D%3D&utm_source=qr&wa_status_inline=true",
+          nama: "Fajar Hidayat",
+          peran: "Ketua Divisi",
+          foto: "png/fajar.png",
+          ig: "https://www.instagram.com/fajar_hidayat13?igsh=MTNpY3JsdzdsZjA1bg==",
         },
         {
-          nama: "M. Fahri Manurung",
-          foto: "png/keanggotaan/fahri.jpeg",
-          ig: "https://www.instagram.com/koiiii678?igsh=aWt3eTBpdDR2cDV3",
-        },
-        {
-          nama: "Ahmad Huzaifah Tanjung",
-          foto: "png/keanggotaan/ahmad.jpeg",
-          ig: "https://www.instagram.com/thenjunggg?igsh=a215Z2h0YTF3djJ0",
-        },
-        {
-          nama: "M.Rizky Fazlim Yusran",
-          foto: "png/keanggotaan/fazlim.jpeg",
-          ig: "https://www.instagram.com/fazliimm_10?igsh=M3BsbTZ5OTE0dnd1 ",
-        },
-        {
-          nama: "Intan Sufikana Zahra",
-          foto: "png/keanggotaan/intan.jpeg",
-          ig: "https://www.instagram.com/intansufiza_?igsh=M2R0N2t4OWhhdDdi",
-        },
-        {
-          nama: "Aulia Rachmadina",
-          foto: "png/keanggotaan/aulia.jpeg",
-          ig: "https://www.instagram.com/auliaarhdn?igsh=MTlwazEwa2w3a2J0eg==",
+          nama: "Bayu Sutrisno",
+          peran: "Anggota",
+          foto: "png/bayu.png",
+          ig: "https://www.instagram.com/bayu.sutris?igsh=MWF3dDZyMXNkenQxMQ==",
         },
       ],
     },
   };
 
-  // Urutan kunci divisi, dipakai untuk navigasi sebelumnya/berikutnya di modal
   const urutanDivisi = [
     "ketua",
     "sekretaris",
@@ -722,48 +841,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalDivisiEyebrow = document.getElementById("modal-divisi-eyebrow");
   const modalAnggotaList = document.getElementById("modal-anggota-list");
   const dropdownItems = document.querySelectorAll(".dropdown-item");
-  const strukturCtaBtn = document.getElementById("struktur-cta-btn");
 
-  let divisiAktif = null; // kunci divisi yang sedang ditampilkan di modal
+  let divisiAktif = null;
 
-  // Ikon kamera default, dipakai sebagai placeholder selama foto asli belum diisi
-  const IKON_KAMERA = `
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 8 H7 L8.5 5.5 H15.5 L17 8 H20 C20.55 8 21 8.45 21 9 V18 C21 18.55 20.55 19 20 19 H4 C3.45 19 3 18.55 3 18 V9 C3 8.45 3.45 8 4 8 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-      <circle cx="12" cy="13.5" r="3.2" stroke="currentColor" stroke-width="1.6"/>
-    </svg>`;
-
-  // Ikon Instagram sederhana, dipakai pada tombol IG placeholder
-  const IKON_INSTAGRAM = `
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.6"/>
-      <circle cx="12" cy="12" r="3.6" stroke="currentColor" stroke-width="1.6"/>
-      <circle cx="17.2" cy="6.8" r="1" fill="currentColor"/>
-    </svg>`;
+  const IKON_KAMERA = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8 H7 L8.5 5.5 H15.5 L17 8 H20 C20.55 8 21 8.45 21 9 V18 C21 18.55 20.55 19 20 19 H4 C3.45 19 3 18.55 3 18 V9 C3 8.45 3.45 8 4 8 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13.5" r="3.2" stroke="currentColor" stroke-width="1.6"/></svg>`;
+  const IKON_INSTAGRAM = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.6" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>`;
 
   function renderDaftarAnggota(anggotaList) {
     if (!modalAnggotaList) return;
     modalAnggotaList.innerHTML = "";
-
     anggotaList.forEach(function (orang, index) {
       const li = document.createElement("li");
-      // Urutan tampil (dipakai CSS untuk delay stagger var(--i))
       li.style.setProperty("--i", index);
 
-      // 1. Canvas foto placeholder (bulat) — isi `orang.foto` dengan path gambar nanti
       const fotoDiv = document.createElement("div");
       fotoDiv.className = "anggota-photo";
       if (orang.foto) {
         const img = document.createElement("img");
-        img.src = orang.foto;
         img.alt = orang.nama;
+        img.loading = "lazy";
+        img.classList.add("img-reveal");
+        // Set src langsung karena modal sudah dibuka user (on-demand)
+        img.src = orang.foto;
+        img.addEventListener("load", function () {
+          img.classList.add("img-loaded");
+        });
         fotoDiv.appendChild(img);
       } else {
         fotoDiv.innerHTML = IKON_KAMERA;
       }
       li.appendChild(fotoDiv);
 
-      // 2. Info: peran (jika ada) + nama
       const infoDiv = document.createElement("div");
       infoDiv.className = "anggota-info";
       if (orang.peran) {
@@ -778,7 +886,6 @@ document.addEventListener("DOMContentLoaded", function () {
       infoDiv.appendChild(namaSpan);
       li.appendChild(infoDiv);
 
-      // 3. Tombol IG placeholder — isi `orang.ig` dengan link Instagram nanti
       const igLink = document.createElement("a");
       igLink.className = "anggota-ig";
       igLink.innerHTML = IKON_INSTAGRAM;
@@ -791,19 +898,15 @@ document.addEventListener("DOMContentLoaded", function () {
         igLink.href = "#";
         igLink.setAttribute("aria-disabled", "true");
         igLink.setAttribute("aria-label", "Instagram belum tersedia");
-        igLink.addEventListener("click", function (event) {
-          event.preventDefault();
+        igLink.addEventListener("click", function (e) {
+          e.preventDefault();
         });
       }
       li.appendChild(igLink);
-
       modalAnggotaList.appendChild(li);
     });
 
-    // Pancing reflow lalu nyalakan animasi masuk satu-satu (stagger).
-    // Tanpa requestAnimationFrame, class is-visible akan langsung aktif
-    // di frame yang sama dengan pembuatan elemen sehingga transition CSS
-    // tidak sempat terpicu (elemen langsung tampil tanpa animasi).
+    // Double rAF untuk trigger animasi masuk
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         modalAnggotaList.querySelectorAll("li").forEach(function (li) {
@@ -816,24 +919,16 @@ document.addEventListener("DOMContentLoaded", function () {
   function bukaModalDivisi(kunciDivisi) {
     const divisi = dataDivisi[kunciDivisi];
     if (!divisi || !strukturModal) return;
-
     divisiAktif = kunciDivisi;
 
     if (modalDivisiImg) {
       modalDivisiImg.src = divisi.gambar;
       modalDivisiImg.alt = divisi.nama;
+      modalDivisiImg.loading = "lazy";
     }
-    if (modalDivisiTitle) {
-      modalDivisiTitle.textContent = divisi.nama;
-    }
-    // Isi eyebrow dengan label divisi — sebelumnya tidak di-update sehingga
-    // selalu menampilkan teks default "Divisi" dan memunculkan error di console
-    if (modalDivisiEyebrow) {
-      modalDivisiEyebrow.textContent = divisi.nama;
-    }
-    if (modalAnggotaList) {
-      renderDaftarAnggota(divisi.anggota);
-    }
+    if (modalDivisiTitle) modalDivisiTitle.textContent = divisi.nama;
+    if (modalDivisiEyebrow) modalDivisiEyebrow.textContent = divisi.nama;
+    if (modalAnggotaList) renderDaftarAnggota(divisi.anggota);
 
     strukturModal.classList.add("active");
     strukturModal.setAttribute("aria-hidden", "false");
@@ -841,12 +936,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function bukaDivisiRelatif(arah) {
     if (!divisiAktif) return;
-    const indeksSaatIni = urutanDivisi.indexOf(divisiAktif);
-    if (indeksSaatIni === -1) return;
-
+    const idx = urutanDivisi.indexOf(divisiAktif);
+    if (idx === -1) return;
     const total = urutanDivisi.length;
-    const indeksBaru = (indeksSaatIni + arah + total) % total;
-    bukaModalDivisi(urutanDivisi[indeksBaru]);
+    bukaModalDivisi(urutanDivisi[(idx + arah + total) % total]);
   }
 
   function tutupModalDivisi() {
@@ -860,15 +953,8 @@ document.addEventListener("DOMContentLoaded", function () {
     item.addEventListener("click", function () {
       const kunciDivisi = item.getAttribute("data-divisi");
       bukaModalDivisi(kunciDivisi);
-
-      // Guard null untuk strukturDropdown DAN strukturToggle secara terpisah
-      // agar tidak throw "Cannot read properties of null" di console
-      if (strukturDropdown) {
-        strukturDropdown.classList.remove("open");
-      }
-      if (strukturToggle) {
-        strukturToggle.setAttribute("aria-expanded", "false");
-      }
+      if (strukturDropdown) strukturDropdown.classList.remove("open");
+      if (strukturToggle) strukturToggle.setAttribute("aria-expanded", "false");
     });
   });
 
@@ -878,39 +964,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if (modalPrevBtn) {
+  if (modalPrevBtn)
     modalPrevBtn.addEventListener("click", function () {
       bukaDivisiRelatif(-1);
     });
-  }
-
-  if (modalNextBtn) {
+  if (modalNextBtn)
     modalNextBtn.addEventListener("click", function () {
       bukaDivisiRelatif(1);
     });
-  }
-
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener("click", tutupModalDivisi);
-  }
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", tutupModalDivisi);
 
   if (strukturModal) {
-    strukturModal.addEventListener("click", function (event) {
-      if (event.target === strukturModal) {
-        tutupModalDivisi();
-      }
+    strukturModal.addEventListener("click", function (e) {
+      if (e.target === strukturModal) tutupModalDivisi();
     });
   }
 
-  document.addEventListener("keydown", function (event) {
+  document.addEventListener("keydown", function (e) {
     if (!strukturModal || !strukturModal.classList.contains("active")) return;
-
-    if (event.key === "Escape") {
-      tutupModalDivisi();
-    } else if (event.key === "ArrowLeft") {
-      bukaDivisiRelatif(-1);
-    } else if (event.key === "ArrowRight") {
-      bukaDivisiRelatif(1);
-    }
+    if (e.key === "Escape") tutupModalDivisi();
+    else if (e.key === "ArrowLeft") bukaDivisiRelatif(-1);
+    else if (e.key === "ArrowRight") bukaDivisiRelatif(1);
   });
 });

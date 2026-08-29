@@ -39,7 +39,12 @@
         <a href="#beranda" class="brand">
           <!-- Logo PNG asli dari file -->
           <div class="brand-logo-wrap" aria-hidden="true">
-            <img src="png/logo.png" alt="" class="brand-logo-img" />
+            <img
+              src="png/logo.png"
+              alt=""
+              class="brand-logo-img"
+              loading="lazy"
+            />
           </div>
 
           <!-- Ornamen kiri dekoratif -->
@@ -358,743 +363,399 @@
     <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
     <main>
-      <!-- 1. HERO / BERANDA -->
-      <section id="beranda" class="hero">
-        <div class="hero-particles" aria-hidden="true">
-          <span
-            class="particle"
-            style="
-              left: 6%;
-              --size: 4px;
-              --dur: 11s;
-              --delay: 0s;
-              --drift: 14px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 16%;
-              --size: 6px;
-              --dur: 14s;
-              --delay: 1.5s;
-              --drift: -18px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 28%;
-              --size: 3px;
-              --dur: 9s;
-              --delay: 3s;
-              --drift: 10px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 40%;
-              --size: 5px;
-              --dur: 13s;
-              --delay: 0.8s;
-              --drift: -12px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 54%;
-              --size: 4px;
-              --dur: 10s;
-              --delay: 2.2s;
-              --drift: 16px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 66%;
-              --size: 6px;
-              --dur: 15s;
-              --delay: 4s;
-              --drift: -20px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 78%;
-              --size: 3px;
-              --dur: 12s;
-              --delay: 1.2s;
-              --drift: 8px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 88%;
-              --size: 5px;
-              --dur: 11.5s;
-              --delay: 2.8s;
-              --drift: -14px;
-            "
-          ></span>
-          <span
-            class="particle"
-            style="
-              left: 94%;
-              --size: 4px;
-              --dur: 13.5s;
-              --delay: 0.4s;
-              --drift: 18px;
-            "
-          ></span>
-        </div>
-        <div class="hero-contour" aria-hidden="true">
-          <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-            <path
-              class="contour-line c1"
-              d="M-50,650 C150,600 300,700 500,640 C700,580 850,660 1050,610 C1150,585 1200,600 1250,590"
-            />
-            <path
-              class="contour-line c2"
-              d="M-50,560 C200,500 350,610 550,540 C750,470 900,560 1100,500 C1180,475 1220,490 1260,480"
-            />
-            <path
-              class="contour-line c3"
-              d="M-50,470 C220,400 380,520 580,440 C780,360 950,460 1150,390 C1200,372 1230,380 1260,372"
-            />
-            <path
-              class="contour-line c4"
-              d="M-50,760 C180,720 330,790 530,740 C730,690 880,760 1080,720 C1160,704 1200,712 1250,706"
-            />
-          </svg>
-        </div>
-
-        <!-- Ornamen hero floating dari logo — versi besar -->
-        <div class="hero-ornamen-kiri" aria-hidden="true">
-          <svg
-            viewBox="0 0 120 160"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g class="hero-ornamen-group">
-              <ellipse
-                cx="55"
-                cy="28"
-                rx="24"
-                ry="14"
-                fill="#c9952a"
-                transform="rotate(-40 55 28)"
-                opacity="0.7"
-              />
-              <ellipse
-                cx="38"
-                cy="40"
-                rx="22"
-                ry="12"
-                fill="#b37d20"
-                transform="rotate(-55 38 40)"
-                opacity="0.6"
-              />
-              <path
-                d="M72 82 C66 64 46 50 32 60 C18 70 22 96 42 100 C62 104 76 88 72 82Z"
-                fill="#d4a830"
-                opacity="0.65"
-              />
-              <path
-                d="M72 82 C66 70 50 60 40 70 C30 80 36 96 50 98 C64 100 74 88 72 82Z"
-                fill="#c9952a"
-                opacity="0.5"
-              />
-              <path
-                d="M56 100 C46 114 30 122 22 118"
-                stroke="#b37d20"
-                stroke-width="4"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.7"
-              />
-              <path
-                d="M64 106 C60 124 50 138 36 142"
-                stroke="#c9952a"
-                stroke-width="3"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.6"
-              />
-              <path
-                d="M46 110 C34 118 22 132 18 148"
-                stroke="#d4a830"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.5"
-              />
-              <circle cx="18" cy="30" r="4.5" fill="#d4a830" opacity="0.5" />
-              <circle cx="12" cy="48" r="3.5" fill="#c9952a" opacity="0.4" />
-              <circle cx="22" cy="18" r="3" fill="#b37d20" opacity="0.4" />
-            </g>
-          </svg>
-        </div>
-        <div class="hero-ornamen-kanan" aria-hidden="true">
-          <svg
-            viewBox="0 0 120 160"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style="transform: scaleX(-1)"
-          >
-            <g class="hero-ornamen-group">
-              <ellipse
-                cx="55"
-                cy="28"
-                rx="24"
-                ry="14"
-                fill="#c9952a"
-                transform="rotate(-40 55 28)"
-                opacity="0.7"
-              />
-              <ellipse
-                cx="38"
-                cy="40"
-                rx="22"
-                ry="12"
-                fill="#b37d20"
-                transform="rotate(-55 38 40)"
-                opacity="0.6"
-              />
-              <path
-                d="M72 82 C66 64 46 50 32 60 C18 70 22 96 42 100 C62 104 76 88 72 82Z"
-                fill="#d4a830"
-                opacity="0.65"
-              />
-              <path
-                d="M72 82 C66 70 50 60 40 70 C30 80 36 96 50 98 C64 100 74 88 72 82Z"
-                fill="#c9952a"
-                opacity="0.5"
-              />
-              <path
-                d="M56 100 C46 114 30 122 22 118"
-                stroke="#b37d20"
-                stroke-width="4"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.7"
-              />
-              <path
-                d="M64 106 C60 124 50 138 36 142"
-                stroke="#c9952a"
-                stroke-width="3"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.6"
-              />
-              <path
-                d="M46 110 C34 118 22 132 18 148"
-                stroke="#d4a830"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                fill="none"
-                opacity="0.5"
-              />
-              <circle cx="18" cy="30" r="4.5" fill="#d4a830" opacity="0.5" />
-              <circle cx="12" cy="48" r="3.5" fill="#c9952a" opacity="0.4" />
-              <circle cx="22" cy="18" r="3" fill="#b37d20" opacity="0.4" />
-            </g>
-          </svg>
-        </div>
-
-        <div class="hero-content">
-          <p class="eyebrow reveal">Kuliah Kerja Nyata · 2026</p>
-          <h1 class="hero-title reveal">
-            Tiga Beringin,<br /><em>tanah tempat kami mengabdi.</em>
-          </h1>
-          <p class="hero-desc reveal">
-            Catatan, program, dan cerita dari mahasiswa KKN Universitas Islam
-            Negeri Sumatera Utara selama mengabdi di Kelurahan Tiga Binanga,
-            Kabupaten Karo.
-          </p>
-          <div class="hero-actions reveal">
-            <a href="#profil" class="btn btn-solid">Jelajahi Desa</a>
-            <button type="button" class="btn btn-ghost" id="struktur-cta-btn">
-              Lihat Struktur Panitia
-            </button>
-          </div>
-        </div>
-
-        <!-- Scroll cue baru: ikon lingkaran+panah lebih estetik -->
-        <a href="#profil" class="scroll-cue" aria-label="Gulir ke bawah">
-          <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-            <circle
-              cx="20"
-              cy="20"
-              r="18"
-              stroke="currentColor"
-              stroke-width="1.4"
-              opacity="0.5"
-            />
-            <path
-              d="M13 18L20 25L27 18"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </a>
-      </section>
-
-      <!-- 2. PROFIL DESA -->
-      <section id="profil" class="section">
-        <div class="section-inner">
-          <p class="eyebrow" data-reveal="blur">Tentang Tempat Ini</p>
-          <h2 class="section-title">Profil Desa</h2>
-          <div class="profil-grid">
-            <div class="profil-text" data-reveal="left">
-              <p>
-                Desa Tiga Beringin berada di dataran tinggi Kabupaten Karo,
-                diapit ladang sayur dan kebun jeruk yang menjadi sumber
-                penghidupan utama warganya. Udara sejuk dan kontur tanah
-                berbukit membentuk pola hidup yang erat dengan alam dan kerja
-                gotong royong.
-              </p>
-              <p>
-                Bagian ini dapat diisi dengan narasi lengkap mengenai letak
-                geografis, jumlah penduduk, serta potensi unggulan desa.
-              </p>
-              <div class="profil-stats">
-                <div class="stat">
-                  <strong>Tiga Binanga</strong><span>Kecamatan</span>
-                </div>
-                <div class="stat">
-                  <strong>Karo</strong><span>Kabupaten</span>
-                </div>
-                <div class="stat">
-                  <strong>2026</strong><span>Tahun Pengabdian</span>
-                </div>
-              </div>
+      <section id="beranda" class="hero neo-hero">
+        <div class="hero-grid section-inner">
+          <div class="hero-copy" data-reveal="left">
+            <p class="eyebrow">KKN 2026 • Desa Tiga Beringin</p>
+            <h1 class="hero-title">
+              Dokumentasi KKN yang <span>nyata</span>, <br />
+              rapi, dan penuh makna.
+            </h1>
+            <p class="hero-desc">
+              Kami hadir di tengah kehidupan desa untuk belajar, bersinergi, dan
+              menyiapkan program yang konkret. Dokumentasi ini menampilkan
+              proses, kolaborasi, dan hasil kerja mahasiswa KKN selama mengabdi
+              di daerah Tiga Binanga.
+            </p>
+            <div class="hero-actions">
+              <a href="#profil" class="btn btn-solid">Lihat profil desa</a>
+              <button type="button" class="btn btn-ghost" id="struktur-cta-btn">
+                Lihat struktur tim
+              </button>
             </div>
-            <div class="profil-visual" data-reveal="right">
-              <svg
-                viewBox="0 0 400 420"
-                class="village-illustration"
-                aria-hidden="true"
-              >
-                <path
-                  class="hill hill-back"
-                  d="M0,260 C80,210 160,250 240,200 C300,165 360,195 400,175 L400,420 L0,420 Z"
-                />
-                <path
-                  class="hill hill-mid"
-                  d="M0,300 C90,260 170,300 250,255 C320,220 370,245 400,230 L400,420 L0,420 Z"
-                />
-                <g class="house">
-                  <path d="M150,300 L200,255 L250,300 Z" />
-                  <rect x="160" y="300" width="80" height="60" />
-                  <rect
-                    x="190"
-                    y="320"
-                    width="20"
-                    height="40"
-                    class="house-door"
-                  />
-                </g>
-                <path
-                  class="hill hill-front"
-                  d="M0,340 C100,310 180,345 260,310 C320,285 370,305 400,300 L400,420 L0,420 Z"
-                />
-                <g class="tea-rows">
-                  <path d="M40,400 L100,370" />
-                  <path d="M70,410 L140,378" />
-                  <path d="M110,415 L185,382" />
-                  <path d="M260,418 L320,388" />
-                  <path d="M300,420 L360,392" />
-                </g>
-              </svg>
+            <div class="hero-meta">
+              <span class="feature-tag">Pengabdian</span>
+              <span class="feature-tag">Kolaborasi</span>
+              <span class="feature-tag">Dokumentasi</span>
+            </div>
+          </div>
+
+          <div class="hero-panel" data-reveal="right">
+            <div class="panel-visual">
+              <img
+                src="png/proker/umum/lurah.jpg"
+                alt="Kegiatan KKN bersama aparat desa"
+                loading="lazy"
+              />
+            </div>
+            <div class="panel-meta">
+              <span class="status-badge">Aktif 2026</span>
+              <h3>Catatan kerja nyata</h3>
+              <ul>
+                <li>Profil desa dan kondisi sosial budaya</li>
+                <li>Program kerja berkelanjutan</li>
+                <li>Dokumentasi kegiatan dan kolaborasi mitra</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 3. PROGRAM KERJA -->
-      <section id="proker" class="section section-tint">
+      <section id="profil" class="section neo-section">
         <div class="section-inner">
-          <p class="eyebrow" data-reveal="blur">Apa yang Kami Kerjakan</p>
-          <h2 class="section-title">Program Kerja</h2>
-          <div class="card-grid">
-            <article class="program-card" data-reveal="flip">
-              <div class="program-icon">
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path
-                    d="M6 12 L24 6 L42 12 L24 18 Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 16 V32 C12 35 17 38 24 38 C31 38 36 35 36 32 V16"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M42 12 V24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </div>
-              <h3>Pendidikan</h3>
-              <p>
-                Bimbingan belajar dan pelatihan literasi untuk anak-anak desa.
-              </p>
-            </article>
-            <article class="program-card" data-reveal="flip">
-              <div class="program-icon">
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path
-                    d="M24 6 C24 6 14 16 14 26 C14 32 18.5 37 24 37 C29.5 37 34 32 34 26 C34 16 24 6 24 6 Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M24 37 V44"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M17 42 H31"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </div>
-              <h3>Lingkungan</h3>
-              <p>
-                Penghijauan, pengelolaan sampah, dan edukasi lingkungan hidup.
-              </p>
-            </article>
-            <article class="program-card" data-reveal="flip">
-              <div class="program-icon">
-                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <path
-                    d="M24 8 C16 8 12 14 12 20 C12 28 24 40 24 40 C24 40 36 28 36 20 C36 14 32 8 24 8 Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M24 15 V25 M19 20 H29"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </div>
-              <h3>Kesehatan</h3>
-              <p>Penyuluhan kesehatan dan kegiatan posyandu bersama warga.</p>
-            </article>
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Tentang lokasi</p>
+            <h2 class="section-title">Profil Desa Tiga Beringin</h2>
           </div>
-        </div>
-      </section>
 
-      <!-- 4. GALERI -->
-      <section id="galeri" class="section">
-        <div class="section-inner">
-          <p class="eyebrow" data-reveal="blur">Dokumentasi</p>
-          <h2 class="section-title">Galeri Kegiatan</h2>
-          <p class="section-sub" data-reveal="blur">
-            Sorotan momen dari rangkaian kegiatan KKN diisi dengan dokumentasi
-            asli saat kegiatan berlangsung.
-          </p>
-          <div class="gallery-grid">
-            <div class="gallery-tile" data-reveal="pop">
-              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                <rect
-                  x="6"
-                  y="10"
-                  width="36"
-                  height="28"
-                  rx="3"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <circle
-                  cx="16"
-                  cy="20"
-                  r="3.5"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <path
-                  d="M6 32 L18 22 L26 28 L34 18 L42 26"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <span>Kegiatan Belajar</span>
-            </div>
-            <div class="gallery-tile" data-reveal="pop">
-              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                <path
-                  d="M24 6 L24 26 M14 16 L24 26 L34 16"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M10 30 C10 38 16 42 24 42 C32 42 38 38 38 30"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <span>Gotong Royong</span>
-            </div>
-            <div class="gallery-tile" data-reveal="pop">
-              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                <circle
-                  cx="24"
-                  cy="18"
-                  r="8"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <path
-                  d="M10 42 C10 32 16 27 24 27 C32 27 38 32 38 42"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <span>Posyandu</span>
-            </div>
-          </div>
-        </div>
-      </section>
+          <div class="profile-grid">
+            <div class="story-card" data-reveal="left">
+              <p>
+                Desa Tiga Beringin merupakan desa yang memiliki karakter
+                agraris, kental dengan budaya gotong royong, serta kondisi
+                lingkungan yang mendukung tumbuhnya kegiatan sosial dan edukasi.
+                Keberadaan masyarakat yang terbuka terhadap inovasi membuat
+                proses pengabdian berjalan dengan semangat belajar dan
+                kolaborasi.
+              </p>
+              <p>
+                Di tengah aktivitas harian warga, kami berupaya hadir sebagai
+                mitra yang membantu menguatkan literasi, menyusun program kerja
+                yang relevan, serta menjaga hubungan baik dengan aparat desa,
+                tokoh masyarakat, dan generasi muda.
+              </p>
 
-      <!-- 5. KONTAK -->
-      <section id="kontak" class="section section-tint">
-        <div class="section-inner">
-          <p class="eyebrow" data-reveal="blur">Hubungi Kami</p>
-          <h2 class="section-title">Kontak</h2>
-          <div class="kontak-grid">
-            <!-- Kiri: Alamat + Instagram KKN dengan ikon WA -->
-            <div class="kontak-info" data-reveal="left">
-              <div class="kontak-row">
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M12 22 C12 22 19 14.5 19 9.5 C19 5.36 15.64 2 12 2 C8.36 2 5 5.36 5 9.5 C5 14.5 12 22 12 22 Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <circle
-                    cx="12"
-                    cy="9.5"
-                    r="2.8"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                </svg>
+              <div class="mini-stats">
                 <div>
-                  <strong>Alamat</strong>
-                  <p>Posko KKN Kelurahan TigaBinanga</p>
+                  <strong>Budaya</strong>
+                  <span>Gotong royong</span>
                 </div>
-              </div>
-
-              <!-- Ikon Instagram -->
-              <div class="kontak-row">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  class="kontak-ig-icon"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="3.5"
-                    y="3.5"
-                    width="17"
-                    height="17"
-                    rx="5"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="4"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" />
-                </svg>
                 <div>
-                  <strong>Instagram KKN Kami</strong>
-                  <a
-                    href="https://www.instagram.com/kkn_kab.karo?igsh=NnR2cWR4ZGIzcnVh"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="kontak-social-link"
-                    >@kkn_kab.karo</a
-                  >
+                  <strong>Potensi</strong>
+                  <span>Pertanian & sosial</span>
+                </div>
+                <div>
+                  <strong>Tujuan</strong>
+                  <span>Memberi manfaat</span>
                 </div>
               </div>
+            </div>
 
-              <!-- Tombol CTA: ke Instagram KKN -->
+            <div class="visual-stack" data-reveal="right">
+              <div class="img-card tall">
+                <img
+                  src="png/proker/umum/sd.jpeg"
+                  alt="Kegiatan edukasi di sekolah desa"
+                  loading="lazy"
+                />
+              </div>
+              <div class="img-card small">
+                <img
+                  src="png/proker/islami/pengajian.jpg"
+                  alt="Kegiatan keagamaan"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dokumen" class="section neo-section alt-panel">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Dokumentasi lengkap</p>
+            <h2 class="section-title">Apa yang kami dokumentasikan</h2>
+          </div>
+
+          <div class="doc-grid">
+            <article class="doc-card" data-reveal="pop">
+              <span class="doc-index">01</span>
+              <h3>Profil Desa</h3>
+              <p>
+                Karakter lokasi, konteks sosial, dan kebutuhan utama yang
+                menjadi dasar perencanaan kegiatan.
+              </p>
+            </article>
+            <article class="doc-card" data-reveal="pop">
+              <span class="doc-index">02</span>
+              <h3>Program Kerja</h3>
+              <p>
+                Rangkaian kegiatan yang disusun berdasarkan kebutuhan
+                masyarakat, mitra, dan potensi desa.
+              </p>
+            </article>
+            <article class="doc-card" data-reveal="pop">
+              <span class="doc-index">03</span>
+              <h3>Kolaborasi</h3>
+              <p>
+                Sinergi dengan aparat desa, guru, tokoh masyarakat, serta
+                kelompok pemuda dalam pelaksanaan program.
+              </p>
+            </article>
+            <article class="doc-card" data-reveal="pop">
+              <span class="doc-index">04</span>
+              <h3>Catatan Lapangan</h3>
+              <p>
+                Foto, evaluasi, dan pengalaman nyata yang menggambarkan
+                perjalanan kegiatan KKN selama masa pengabdian.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="proker" class="section neo-section">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Program kerja</p>
+            <h2 class="section-title">Rangkaian kegiatan utama</h2>
+          </div>
+
+          <div class="program-grid">
+            <article class="neo-program-card" data-reveal="flip">
+              <img
+                src="png/proker/umum/partisipasi_pemupukan.jpg"
+                alt="Program sosial dan pertanian"
+                loading="lazy"
+              />
+              <div class="program-copy">
+                <span class="chip">Pertanian</span>
+                <h3>Pemberdayaan dan edukasi pertanian</h3>
+                <p>
+                  Memberikan pemahaman mengenai pengelolaan lahan, teknologi
+                  sederhana, dan pelibatan masyarakat dalam kegiatan produktif.
+                </p>
+              </div>
+            </article>
+
+            <article class="neo-program-card" data-reveal="flip">
+              <img
+                src="png/proker/umum/smp.jpeg"
+                alt="Program edukasi generasi muda"
+                loading="lazy"
+              />
+              <div class="program-copy">
+                <span class="chip">Pendidikan</span>
+                <h3>Pendidikan dan bimbingan belajar</h3>
+                <p>
+                  Mendukung literasi, belajar mandiri, dan interaksi positif
+                  dengan siswa dan generasi muda di lingkungan desa.
+                </p>
+              </div>
+            </article>
+
+            <article class="neo-program-card" data-reveal="flip">
+              <img
+                src="png/proker/umum/keberangkatan.jpeg"
+                alt="Persiapan KKN"
+                loading="lazy"
+              />
+              <div class="program-copy">
+                <span class="chip">Persiapan</span>
+                <h3>Pembekalan dan sosialisasi</h3>
+                <p>
+                  Memperkuat pemahaman awal sebelum masuk ke lapangan dan
+                  memastikan sinergi dengan dosen pembimbing serta mitra.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="timeline" class="section neo-section alt-panel">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Alur kerja</p>
+            <h2 class="section-title">Timeline kegiatan KKN</h2>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item" data-reveal="left">
+              <span class="timeline-step">01</span>
+              <div>
+                <h3>Observasi awal</h3>
+                <p>
+                  Memahami kondisi desa, kebutuhan masyarakat, dan potensi
+                  program yang sesuai.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item" data-reveal="left">
+              <span class="timeline-step">02</span>
+              <div>
+                <h3>Perencanaan</h3>
+                <p>
+                  Menyusun sasaran kerja, pembagian tugas, dan pendekatan
+                  kolaboratif dengan mitra.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item" data-reveal="left">
+              <span class="timeline-step">03</span>
+              <div>
+                <h3>Pelaksanaan</h3>
+                <p>
+                  Menjalankan kegiatan lapangan dengan pendekatan yang responsif
+                  terhadap kebutuhan masyarakat.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item" data-reveal="left">
+              <span class="timeline-step">04</span>
+              <div>
+                <h3>Evaluasi</h3>
+                <p>
+                  Menilai dampak kegiatan, memperbaiki langkah, dan menyusun
+                  dokumen pembelajaran.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="galeri" class="section neo-section">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Galeri</p>
+            <h2 class="section-title">Dokumentasi kegiatan</h2>
+          </div>
+
+          <div class="gallery-grid neo-gallery">
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/islami/pengajian.jpg"
+                alt="Kegiatan pengajian"
+                loading="lazy"
+              />
+              <figcaption>Pengajian bersama</figcaption>
+            </figure>
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/umum/lurah.jpg"
+                alt="Silaturahmi dengan aparat desa"
+                loading="lazy"
+              />
+              <figcaption>Silaturahmi dengan aparatur</figcaption>
+            </figure>
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/umum/keberangkatan.jpeg"
+                alt="Pelepasan KKN"
+                loading="lazy"
+              />
+              <figcaption>Pembekalan dan pelepasan</figcaption>
+            </figure>
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/umum/sd.jpeg"
+                alt="Edukasi siswa SD"
+                loading="lazy"
+              />
+              <figcaption>Edukasi siswa SD</figcaption>
+            </figure>
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/umum/smp.jpeg"
+                alt="Program pelatihan siswa SMP"
+                loading="lazy"
+              />
+              <figcaption>Program siswa SMP</figcaption>
+            </figure>
+            <figure class="gallery-tile" data-reveal="pop">
+              <img
+                src="png/proker/umum/mandi bersama.jpeg"
+                alt="Kegiatan rekreasi dan kebersamaan"
+                loading="lazy"
+              />
+              <figcaption>Moment kebersamaan</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section neo-section alt-panel">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Catatan penting</p>
+            <h2 class="section-title">Dokumentasi singkat</h2>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>Siapa mitra kerja kami?</summary>
+              <p>
+                Tim KKN berkolaborasi dengan aparat desa, sekolah, tokoh
+                masyarakat, dan kaum muda untuk memastikan program berlangsung
+                sesuai kebutuhan lokal.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>Apa fokus utama kegiatan?</summary>
+              <p>
+                Fokusnya tidak hanya pada satu bidang, tetapi pada edukasi,
+                sosial, dan penguatan hubungan komunitas agar manfaatnya
+                bersifat menyeluruh.
+              </p>
+            </details>
+            <details class="faq-item">
+              <summary>Bagaimana dokumentasi ini dibuat?</summary>
+              <p>
+                Dokumentasi bersumber dari kegiatan nyata, foto lapangan, dan
+                pengalaman tim selama menjalani proses pengabdian di Desa Tiga
+                Beringin.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="kontak" class="section neo-section">
+        <div class="section-inner">
+          <div class="section-head" data-reveal="blur">
+            <p class="eyebrow">Hubungi</p>
+            <h2 class="section-title">Kontak dan media</h2>
+          </div>
+
+          <div class="contact-grid">
+            <div class="contact-card" data-reveal="left">
+              <h3>Posko KKN</h3>
+              <p>Kelurahan Tiga Binanga, Kabupaten Karo</p>
               <a
                 href="https://www.instagram.com/kkn_kab.karo?igsh=NnR2cWR4ZGIzcnVh"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn btn-ig"
+                >@kkn_kab.karo</a
               >
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect
-                    x="3.5"
-                    y="3.5"
-                    width="17"
-                    height="17"
-                    rx="5"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="4"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" />
-                </svg>
-                <span>Ikuti Instagram Kami</span>
-              </a>
             </div>
-
-            <!-- Kanan: Dikembangkan oleh -->
-            <div class="kontak-dev" data-reveal="right">
-              <p class="kontak-dev-label">Dikembangkan Oleh</p>
-              <div class="dev-cards">
-                <div class="dev-card dev-card-project">
-                  <div class="dev-avatar dev-avatar-project" aria-hidden="true">
-                    <!-- Placeholder logo qalopi.ai — akan diganti dengan logo asli -->
-                    <img
-                      src="png/dev.jpeg"
-                      alt="Logo Qalopi.ai"
-                      class="dev-avatar-img"
-                      onerror="
-                        this.style.display = 'none';
-                        this.nextElementSibling.style.display = 'flex';
-                      "
-                    />
-                    <svg
-                      class="dev-avatar-fallback"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      style="display: none"
-                    >
-                      <path
-                        d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12 12L20 7.5M12 12L4 7.5M12 12V21"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <div class="dev-info">
-                    <strong>Qarl</strong>
-                    <p class="dev-project-desc">
-                      Kepoin Media Sosial Pengembang
-                    </p>
-                    <div class="dev-links dev-links-row">
-                      <!--
-                        TODO: Dokumen PDF tentang Qalopi.ai BELUM SIAP.
-                        href di bawah ini ("pdf/qalopi-ai-profile.pdf") adalah PLACEHOLDER.
-                        Ganti dengan path PDF asli begitu dokumen profil Qalopi.ai tersedia,
-                        lalu letakkan file PDF-nya di folder /pdf pada root project.
-                      -->
-                      <a
-                        href="pdf/qalopi-ai-profile.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="dev-link dev-link-web"
-                        aria-label="Lihat dokumen profil Qalopi.ai (PDF)"
-                        title="Profil Qalopi.ai (PDF)"
-                      >
-                        <img
-                          src="png/qalopi.aiNewlogo.png"
-                          alt="Qalopi.ai"
-                          class="dev-link-web-img"
-                        />
-                      </a>
-                      <a
-                        href="https://www.instagram.com/qarlbanihakim?igsh=OG05bmEyczZ4ZHNi"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="dev-link dev-link-ig"
-                        aria-label="Instagram Qalopi.ai"
-                        title="Instagram"
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                          <rect
-                            x="3.5"
-                            y="3.5"
-                            width="17"
-                            height="17"
-                            rx="5"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                          />
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="3.6"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                          />
-                          <circle
-                            cx="17.2"
-                            cy="6.8"
-                            r="1"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </a>
-                      <a
-                        href="https://github.com/hayqalbanihakim212-crypto"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="dev-link dev-link-github"
-                        aria-label="GitHub Qalopi.ai"
-                        title="GitHub"
-                      >
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M12 0.5C5.65 0.5 0.5 5.78 0.5 12.3c0 5.21 3.29 9.63 7.86 11.19.57.11.78-.26.78-.57 0-.28-.01-1.22-.02-2.21-3.2.72-3.87-1.42-3.87-1.42-.52-1.36-1.28-1.72-1.28-1.72-1.04-.73.08-.71.08-.71 1.15.08 1.76 1.21 1.76 1.21 1.02 1.78 2.68 1.27 3.33.97.1-.75.39-1.27.71-1.56-2.55-.3-5.24-1.31-5.24-5.83 0-1.29.44-2.34 1.16-3.16-.12-.3-.5-1.52.11-3.16 0 0 .95-.31 3.12 1.21a10.7 10.7 0 015.68 0c2.16-1.52 3.11-1.21 3.11-1.21.62 1.64.24 2.86.12 3.16.72.82 1.16 1.87 1.16 3.16 0 4.53-2.7 5.53-5.26 5.82.41.37.78 1.1.78 2.22 0 1.6-.01 2.89-.01 3.28 0 .31.21.69.79.57C20.71 21.92 24 17.5 24 12.3 24 5.78 18.85.5 12.5.5h-.5Z"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+            <div class="contact-card accent" data-reveal="right">
+              <h3>Pengembang</h3>
+              <p>Qarl · Dokumentasi digital untuk KKN</p>
+              <div class="contact-links">
+                <a
+                  href="https://www.instagram.com/qarlbanihakim?igsh=OG05bmEyczZ4ZHNi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Instagram</a
+                >
+                <a
+                  href="https://github.com/hayqalbanihakim212-crypto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >
               </div>
             </div>
           </div>
@@ -1188,7 +849,7 @@
           </svg>
         </button>
         <div class="modal-header-img">
-          <img id="modal-divisi-img" src="" alt="" />
+          <img id="modal-divisi-img" src="" alt="" loading="lazy" />
         </div>
         <div class="modal-body">
           <p class="eyebrow" id="modal-divisi-eyebrow">Divisi</p>

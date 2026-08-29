@@ -179,12 +179,14 @@ button {
 }
 .section-title .word-inner {
   display: inline-block;
-  transform: translateY(115%);
-  transition: transform 0.85s var(--ease);
-  transition-delay: calc(var(--word-i, 0) * 0.06s);
+  transform: translateY(110%);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: calc(var(--word-i, 0) * 0.065s);
+  will-change: transform;
 }
 .section-title.is-visible .word-inner {
   transform: translateY(0);
+  will-change: auto;
 }
 
 .section-sub {
@@ -278,17 +280,19 @@ button {
   opacity: 0;
   transform: translateY(24px);
   transition:
-    opacity 0.75s var(--ease),
-    transform 0.75s var(--ease),
-    filter 0.75s var(--ease),
+    opacity 0.72s var(--ease),
+    transform 0.72s var(--ease),
+    filter 0.72s var(--ease),
     letter-spacing 0.8s var(--ease);
-  transition-delay: calc(var(--reveal-i, 0) * 0.09s);
+  transition-delay: calc(var(--reveal-i, 0) * 0.085s);
+  will-change: opacity, transform, filter;
 }
 .reveal.is-visible,
 [data-reveal].is-visible {
   opacity: 1;
   transform: none;
   filter: blur(0);
+  will-change: auto;
 }
 
 /* Varian: masuk dari kiri/kanan */
@@ -319,6 +323,55 @@ button {
 /* Varian: naik dari bawah dengan sedikit rotasi (galeri) */
 [data-reveal="pop"] {
   transform: translateY(30px) scale(0.9) rotate(-3deg);
+}
+
+/* =========================================
+   SECTION PARALLAX OVERLAP EFFECT
+   Subtle parallax saat section masuk viewport
+   ========================================= */
+.section-inner {
+  transform: translateY(var(--section-parallax, 0px));
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Extra polish: gentle scale effect pada section yang masuk */
+.section-inner.is-visible {
+  transform: translateY(0) scale(1);
+}
+
+/* Parallax lebih halus untuk section title */
+.section-title {
+  transform: translateY(calc(var(--section-parallax, 0px) * 0.35));
+  transition: transform 0.8s var(--ease);
+}
+
+/* Program card dengan improved stagger */
+.program-card {
+  transition:
+    opacity 0.72s var(--ease),
+    transform 0.72s var(--ease),
+    filter 0.72s var(--ease),
+    box-shadow 0.72s var(--ease);
+  transition-delay: calc(var(--reveal-i, 0) * 0.095s);
+  will-change: opacity, transform;
+}
+
+.program-card.is-visible {
+  box-shadow: 0 4px 16px rgba(27, 46, 40, 0.12);
+}
+
+html[data-theme="dark"] .program-card.is-visible {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Gallery tile dengan improved animation */
+.gallery-tile {
+  transition:
+    opacity 0.72s var(--ease),
+    transform 0.72s var(--ease),
+    filter 0.72s var(--ease);
+  transition-delay: calc(var(--reveal-i, 0) * 0.085s);
+  will-change: opacity, transform;
 }
 
 .nav-backdrop,
@@ -979,25 +1032,27 @@ html[data-theme="dark"] .theme-toggle .icon-moon {
   padding: 10px 16px;
   cursor: pointer;
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   transition:
-    background-color 0.18s var(--ease),
-    color 0.18s var(--ease),
-    transform 0.18s var(--ease),
-    opacity 0.3s var(--ease);
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.35s var(--ease);
+  will-change: opacity, transform;
 }
 /* Item dropdown muncul satu-satu (stagger) saat menu dibuka */
 .has-dropdown.open .dropdown-item {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: calc(var(--reveal-i, 0) * 0.045s);
+  transition-delay: calc(var(--reveal-i, 0) * 0.055s);
 }
 .has-dropdown.open .dropdown-item:hover,
 .has-dropdown.open .dropdown-item:focus-visible {
   background-color: var(--ink);
   color: var(--cream);
-  transform: translateX(3px);
+  transform: translateX(4px);
   outline: none;
+  will-change: auto;
 }
 
 /* =========================================
@@ -2229,21 +2284,27 @@ html[data-theme="dark"] .dev-link-github:hover {
   color: var(--text);
   font-size: 0.92rem;
   opacity: 0;
-  transform: translateX(-16px);
+  transform: translateX(-20px) scale(0.95);
   transition:
-    transform 0.4s var(--ease-spring),
-    opacity 0.4s var(--ease),
-    background-color 0.2s var(--ease);
-  transition-delay: calc(var(--i, 0) * 0.05s);
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.45s var(--ease),
+    background-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+  transition-delay: calc(var(--i, 0) * 0.06s);
+  will-change: opacity, transform;
+  box-shadow: 0 2px 8px rgba(27, 46, 40, 0.06);
 }
 .modal-anggota-list li.is-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
+  box-shadow: 0 4px 12px rgba(27, 46, 40, 0.1);
 }
 .modal-anggota-list li.is-visible:hover {
-  transform: translateX(4px);
+  transform: translateX(6px) scale(1.02);
   background-color: #ece6d4;
+  box-shadow: 0 6px 16px rgba(27, 46, 40, 0.15);
   transition-delay: 0s;
+  will-change: auto;
 }
 
 .anggota-photo {
@@ -2336,7 +2397,6 @@ html[data-theme="dark"] .dev-link-github:hover {
     max-width: 320px;
     margin: 0 auto;
   }
-  .card-grid,
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2561,6 +2621,155 @@ html[data-theme="dark"] .dev-link-github:hover {
 }
 
 /* =========================================
+   PROKER CAROUSEL INLINE
+   ========================================= */
+.proker-carousel-wrap {
+  position: relative;
+  /* Tidak pakai overflow:hidden di sini agar tombol nav tidak terpotong.
+     Clipping dilakukan oleh .proker-carousel-clip di dalam. */
+}
+
+.proker-carousel-clip {
+  overflow: hidden;
+}
+
+.proker-carousel-track {
+  display: flex;
+  gap: 28px;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+}
+.proker-carousel-track.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.proker-carousel-track .program-card {
+  flex: 0 0 calc((100% - 56px) / 3);
+  min-width: 0;
+}
+
+.proker-carousel-btn {
+  position: absolute;
+  top: calc(
+    50% - 28px
+  ); /* 28px = setengah tinggi dots area dikurangi sedikit */
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1.5px solid rgba(201, 162, 39, 0.3);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(27, 46, 40, 0.18);
+  transition:
+    background-color 0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    transform 0.25s var(--ease-spring),
+    opacity 0.22s var(--ease);
+}
+.proker-carousel-btn:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+  transform: translateY(-50%) scale(1.08);
+}
+.proker-carousel-btn.is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.proker-carousel-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.proker-carousel-prev {
+  left: -22px;
+}
+.proker-carousel-next {
+  right: -22px;
+}
+
+.proker-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+.proker-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(27, 46, 40, 0.18);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition:
+    background 0.25s var(--ease),
+    transform 0.25s var(--ease-spring);
+}
+html[data-theme="dark"] .proker-carousel-dot {
+  background: rgba(233, 230, 218, 0.2);
+}
+.proker-carousel-dot.active {
+  background: var(--gold);
+  transform: scale(1.45);
+}
+
+html[data-theme="dark"] .proker-carousel-track .program-card {
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(201, 162, 39, 0.18);
+}
+
+/* Foto di atas kartu program kerja */
+.program-card-img {
+  width: calc(100% + 56px);
+  margin: -36px -28px 20px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+}
+.program-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+.program-card:hover .program-card-img img {
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 900px) {
+  .proker-carousel-track .program-card {
+    flex: 0 0 calc((100% - 28px) / 2);
+  }
+  .proker-carousel-prev {
+    left: -16px;
+  }
+  .proker-carousel-next {
+    right: -16px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .proker-carousel-track .program-card {
+    flex: 0 0 85%;
+  }
+  .proker-carousel-prev {
+    left: 0;
+  }
+  .proker-carousel-next {
+    right: 0;
+  }
+}
+
+/* =========================================
    13. MOTION REDUCTION
    ========================================= */
 @media (prefers-reduced-motion: reduce) {
@@ -2570,5 +2779,918 @@ html[data-theme="dark"] .dev-link-github:hover {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* ============================================================
+   NEO-BRUTALIST REDESIGN FOR KKN DOCUMENTATION PAGE
+   ============================================================ */
+
+:root {
+  --neo-black: #111111;
+  --neo-cream: #f5f1e8;
+  --neo-yellow: #f5c84c;
+  --neo-red: #ff6b57;
+  --neo-blue: #2b6df6;
+  --neo-green: #3fa16d;
+  --neo-text: #1d1d1d;
+  --neo-shadow: 6px 6px 0 #111111;
+  --neo-border: 3px solid #111111;
+}
+
+body {
+  background: var(--neo-cream);
+}
+
+.neo-hero {
+  background: linear-gradient(135deg, #f7d76e 0%, #f0efeb 35%, #dfeaff 100%);
+  border-bottom: var(--neo-border);
+  box-shadow: inset 0 -8px 0 rgba(17, 17, 17, 0.06);
+}
+
+.neo-hero .section-inner {
+  width: min(var(--container), calc(100% - 40px));
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: center;
+  padding-top: 140px;
+}
+
+.neo-hero .hero-copy {
+  text-align: left;
+}
+
+.neo-hero .eyebrow {
+  color: var(--neo-black);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 18px;
+}
+
+.neo-hero .hero-title {
+  color: var(--neo-black);
+  line-height: 0.94;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  max-width: 620px;
+  margin-bottom: 18px;
+}
+
+.neo-hero .hero-title span {
+  display: inline-block;
+  background: var(--neo-yellow);
+  padding: 0 10px 4px;
+  border: var(--neo-border);
+  box-shadow: 4px 4px 0 var(--neo-black);
+  transform: rotate(-1.3deg);
+}
+
+.neo-hero .hero-desc {
+  color: rgba(17, 17, 17, 0.8);
+  max-width: 560px;
+  font-size: 1.02rem;
+}
+
+.neo-hero .hero-actions {
+  justify-content: flex-start;
+  margin-top: 28px;
+}
+
+.neo-hero .btn {
+  border-radius: 0;
+  border: var(--neo-border);
+  box-shadow: 4px 4px 0 var(--neo-black);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.neo-hero .btn-solid {
+  background: var(--neo-black);
+  color: #fff;
+}
+
+.neo-hero .btn-ghost {
+  color: var(--neo-black);
+  background: transparent;
+  border: var(--neo-border);
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.feature-tag {
+  display: inline-flex;
+  align-items: center;
+  border: var(--neo-border);
+  background: #fff;
+  box-shadow: 4px 4px 0 var(--neo-black);
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-panel {
+  background: #fff;
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  transform: rotate(1.3deg);
+}
+
+.panel-visual {
+  border-bottom: var(--neo-border);
+  background: #e7ebf4;
+}
+
+.panel-visual img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.panel-meta {
+  padding: 20px 18px 22px;
+}
+
+.status-badge {
+  display: inline-block;
+  background: var(--neo-green);
+  color: #fff;
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  padding: 7px 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-meta h3 {
+  margin: 18px 0 12px;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  color: var(--neo-black);
+  font-family: var(--font-display);
+}
+
+.panel-meta ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: rgba(17, 17, 17, 0.8);
+  font-weight: 600;
+}
+
+.neo-section {
+  padding: 88px 24px;
+}
+
+.neo-section .section-inner {
+  width: min(var(--container), calc(100% - 40px));
+}
+
+.section-head {
+  margin-bottom: 28px;
+}
+
+.section-head .eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+  color: var(--neo-black);
+  font-family: var(--font-display);
+}
+
+.alt-panel {
+  background: #f0eee7;
+  border-block: var(--neo-border);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.story-card,
+.contact-card,
+.doc-card,
+.neo-program-card,
+.gallery-tile {
+  background: #fff;
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+}
+
+.story-card {
+  padding: 26px 22px;
+}
+
+.story-card p {
+  margin: 0 0 16px;
+  color: rgba(17, 17, 17, 0.82);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.mini-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 12px;
+  background: #f5f1e8;
+  border: var(--neo-border);
+}
+
+.mini-stats strong {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--neo-black);
+}
+
+.mini-stats span {
+  color: rgba(17, 17, 17, 0.8);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.visual-stack {
+  display: grid;
+  grid-template-columns: 1fr 0.72fr;
+  gap: 18px;
+}
+
+.img-card {
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  overflow: hidden;
+  background: #fff;
+}
+
+.img-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-card.tall {
+  min-height: 360px;
+}
+
+.img-card.small {
+  min-height: 250px;
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.doc-card {
+  padding: 18px 18px 20px;
+  transform: rotate(-1.4deg);
+}
+
+.doc-card:nth-child(2n) {
+  transform: rotate(1.4deg);
+}
+
+.doc-card .doc-index {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  background: var(--neo-yellow);
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.doc-card h3 {
+  font-family: var(--font-display);
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+  color: var(--neo-black);
+}
+
+.doc-card p {
+  margin: 0;
+  color: rgba(17, 17, 17, 0.8);
+  line-height: 1.7;
+  font-size: 0.94rem;
+}
+
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.neo-program-card {
+  overflow: hidden;
+  position: relative;
+}
+
+.neo-program-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  border-bottom: var(--neo-border);
+}
+
+.program-copy {
+  padding: 18px 18px 22px;
+}
+
+.chip {
+  display: inline-block;
+  background: var(--neo-blue);
+  color: #fff;
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  padding: 6px 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  margin-bottom: 10px;
+}
+
+.program-copy h3 {
+  margin: 0 0 8px;
+  color: var(--neo-black);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.program-copy p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: rgba(17, 17, 17, 0.8);
+}
+
+.timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 18px;
+  align-items: center;
+  background: #fff;
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  padding: 18px 18px 18px 10px;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  background: var(--neo-red);
+  border: var(--neo-border);
+  box-shadow: 4px 4px 0 var(--neo-black);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-left: 8px;
+}
+
+.timeline-item h3 {
+  margin: 0 0 8px;
+  color: var(--neo-black);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+}
+
+.timeline-item p {
+  margin: 0;
+  color: rgba(17, 17, 17, 0.8);
+  line-height: 1.7;
+}
+
+.neo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.neo-gallery .gallery-tile {
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.neo-gallery .gallery-tile img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  border-bottom: var(--neo-border);
+}
+
+.neo-gallery figcaption {
+  padding: 14px 12px 16px;
+  font-weight: 800;
+  color: var(--neo-black);
+}
+
+.faq-list {
+  display: grid;
+  gap: 14px;
+}
+
+.faq-item {
+  background: #fff;
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  padding: 0 18px;
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 0;
+  font-weight: 900;
+  color: var(--neo-black);
+  position: relative;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: var(--neo-border);
+  background: var(--neo-yellow);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  font-size: 1.2rem;
+}
+
+.faq-item[open] summary::after {
+  content: "−";
+}
+
+.faq-item p {
+  margin: 0 0 18px;
+  color: rgba(17, 17, 17, 0.82);
+  line-height: 1.75;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  padding: 22px 18px;
+}
+
+.contact-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin: 0 0 8px;
+  color: var(--neo-black);
+}
+
+.contact-card p {
+  margin: 0 0 12px;
+  color: rgba(17, 17, 17, 0.8);
+  line-height: 1.7;
+}
+
+.contact-card a {
+  color: var(--neo-black);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.contact-card.accent {
+  background: var(--neo-yellow);
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact-links a {
+  display: inline-block;
+  padding: 8px 10px;
+  background: #fff;
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+}
+
+@media (max-width: 960px) {
+  .hero-grid,
+  .profile-grid,
+  .program-grid,
+  .doc-grid,
+  .neo-gallery,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .neo-hero .hero-title {
+    font-size: clamp(2.2rem, 13vw, 3.4rem);
+  }
+
+  .hero-grid {
+    padding-top: 110px;
+  }
+
+  .mini-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+    padding-left: 18px;
+  }
+
+  .timeline-step {
+    margin-left: 0;
+  }
+}
+
+/* =========================================
+   PERBAIKAN UTAMA — LAZY LOADING IMAGE FADE-IN
+   ========================================= */
+
+/* Semua gambar: mulai transparan, fade-in setelah loaded */
+img.img-reveal {
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+img.img-reveal.img-loaded {
+  opacity: 1;
+  will-change: auto;
+}
+/* Fallback: jika gambar error, tetap tampilkan container */
+img.img-error {
+  opacity: 0.35;
+}
+
+/* =========================================
+   PERBAIKAN — SECTION OVERLAP ENTRANCE ANIMATION
+   
+   Setiap section "naik" dari bawah saat masuk
+   viewport — efek overlap yang halus & sinambung
+   ========================================= */
+
+/* State awal: section belum masuk */
+.section,
+.neo-section,
+.neo-hero {
+  --section-slide: 40px;
+  transform: translateY(var(--section-slide));
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* State setelah masuk viewport (ditambah oleh JS) */
+.section.section-entered,
+.neo-section.section-entered,
+.neo-hero.section-entered {
+  --section-slide: 0px;
+  will-change: auto;
+}
+
+/* Hero section — langsung tampil tanpa delay (sudah di viewport) */
+.neo-hero {
+  --section-slide: 0px;
+}
+
+/* =========================================
+   PERBAIKAN — GALERI FIGCAPTION SELALU TERLIHAT
+   
+   Sebelumnya: figcaption tertutup foto
+   Sekarang: gradient overlay di bawah foto +
+             figcaption tampil selalu visible
+   ========================================= */
+
+/* Hapus padding lama, buat relatif untuk overlay */
+.neo-gallery .gallery-tile {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  display: block; /* Override flex */
+}
+
+/* Foto galeri: tanpa border-bottom lagi (diganti gradient) */
+.neo-gallery .gallery-tile img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  border-bottom: none;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Zoom foto saat hover */
+.neo-gallery .gallery-tile:hover img {
+  transform: scale(1.06);
+}
+
+/* Gradient overlay bawah — selalu ada */
+.neo-gallery .gallery-tile::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: linear-gradient(
+    to top,
+    rgba(17, 17, 17, 0.82) 0%,
+    rgba(17, 17, 17, 0.45) 40%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+/* Hover: perjelas gradient */
+.neo-gallery .gallery-tile:hover::before {
+  opacity: 0.9;
+}
+
+/* figcaption: tumpuk di atas gradient, selalu visible */
+.neo-gallery figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 14px 16px;
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 0.9rem;
+  z-index: 2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.01em;
+  /* Selalu terlihat — tidak perlu hover */
+  opacity: 1;
+  transform: none;
+}
+
+/* Sedikit naik saat hover */
+.neo-gallery .gallery-tile:hover figcaption {
+  transform: translateY(-3px);
+  transition: transform 0.3s ease;
+}
+
+/* Kilau overlay saat hover: sesuaikan z-index */
+.neo-gallery .gallery-tile::after {
+  z-index: 3;
+}
+
+/* =========================================
+   PERBAIKAN — NEO PROGRAM CARD LAYOUT
+   
+   Foto tidak tertutup teks:
+   - Foto di atas, teks di bawah yang jelas
+   - Chip tidak tumpang tindih foto
+   ========================================= */
+
+.neo-program-card {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* Foto: fixed height, tidak overflow ke teks */
+.neo-program-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center top; /* Prioritaskan bagian atas foto */
+  display: block;
+  border-bottom: var(--neo-border);
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.neo-program-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Teks di bawah foto: z-index di atas foto, background solid */
+.program-copy {
+  padding: 18px 18px 22px;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  flex: 1;
+}
+
+/* Chip tidak tumpang tindih foto */
+.chip {
+  display: inline-block;
+  background: var(--neo-blue);
+  color: #fff;
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  padding: 6px 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================
+   PERBAIKAN — VISUAL STACK (img-card) LABELS
+   
+   Foto di profil desa: pastikan teks/caption
+   tidak tumpang tindih gambar
+   ========================================= */
+
+.img-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient overlay pada img-card */
+.img-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(17, 17, 17, 0.55), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.img-card:hover::after {
+  opacity: 1;
+}
+
+/* =========================================
+   DARK MODE UNTUK NEO GALLERY
+   ========================================= */
+html[data-theme="dark"] .neo-gallery .gallery-tile {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .neo-gallery .gallery-tile::before {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    transparent 100%
+  );
+}
+html[data-theme="dark"] .program-copy {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================
+   SMOOTH SECTION TRANSITIONS TAMBAHAN
+   Tambahan animasi overlap yang lebih natural
+   ========================================= */
+
+/* Section berikutnya masuk dari bawah dengan subtle scale */
+@keyframes sectionSlideUp {
+  from {
+    opacity: 0.85;
+    transform: translateY(28px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.section.section-entered,
+.neo-section.section-entered {
+  animation: sectionSlideUp 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Cegah animasi berulang setelah selesai */
+.section.section-entered,
+.neo-section.section-entered {
+  transform: translateY(0) !important;
+}
+
+/* =========================================
+   REDUCED MOTION SUPPORT
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  img.img-reveal {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .section,
+  .neo-section,
+  .neo-hero {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .neo-gallery .gallery-tile img {
+    transition: none !important;
+  }
+  .neo-program-card img {
+    transition: none !important;
+  }
+}
+
+/* =========================================
+   RESPONSIVE FIXES
+   ========================================= */
+@media (max-width: 768px) {
+  .neo-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .neo-gallery .gallery-tile img {
+    height: 180px;
+  }
+  .neo-gallery figcaption {
+    font-size: 0.8rem;
+    padding: 10px 10px 12px;
+  }
+  .neo-program-card img {
+    height: 180px;
+  }
+  /* Section overlap: lebih kecil di mobile */
+  .section,
+  .neo-section {
+    --section-slide: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .neo-gallery {
+    grid-template-columns: 1fr;
+  }
+  .neo-gallery .gallery-tile img {
+    height: 200px;
   }
 }
