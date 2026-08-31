@@ -626,63 +626,72 @@
         </div>
       </section>
 
+      <!-- =====================================================
+           DOKUMENTASI KEGIATAN — SISTEM TANGGAL + FLIP CARD
+           ===================================================== -->
       <section id="galeri" class="section neo-section">
         <div class="section-inner">
           <div class="section-head" data-reveal="blur">
             <p class="eyebrow">Galeri</p>
             <h2 class="section-title">Dokumentasi kegiatan</h2>
+            <p class="dok-subtitle">
+              28 Juli – 28 Agustus 2026 · Klik foto untuk melihat lebih
+            </p>
           </div>
 
-          <div class="gallery-grid neo-gallery">
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/islami/pengajian.jpg"
-                alt="Kegiatan pengajian"
-                loading="lazy"
-              />
-              <figcaption>Pengajian bersama</figcaption>
-            </figure>
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/umum/lurah.jpg"
-                alt="Silaturahmi dengan aparat desa"
-                loading="lazy"
-              />
-              <figcaption>Silaturahmi dengan aparatur</figcaption>
-            </figure>
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/umum/keberangkatan.jpeg"
-                alt="Pelepasan KKN"
-                loading="lazy"
-              />
-              <figcaption>Pembekalan dan pelepasan</figcaption>
-            </figure>
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/umum/sd.jpeg"
-                alt="Edukasi siswa SD"
-                loading="lazy"
-              />
-              <figcaption>Edukasi siswa SD</figcaption>
-            </figure>
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/umum/smp.jpeg"
-                alt="Program pelatihan siswa SMP"
-                loading="lazy"
-              />
-              <figcaption>Program siswa SMP</figcaption>
-            </figure>
-            <figure class="gallery-tile" data-reveal="pop">
-              <img
-                src="png/proker/umum/mandi bersama.jpeg"
-                alt="Kegiatan rekreasi dan kebersamaan"
-                loading="lazy"
-              />
-              <figcaption>Moment kebersamaan</figcaption>
-            </figure>
+          <!-- Tab navigasi tanggal (scroll horizontal) -->
+          <div class="dok-tab-wrapper" data-reveal>
+            <button
+              class="dok-tab-arrow dok-tab-prev"
+              id="dok-prev"
+              aria-label="Geser kiri"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M15 18l-6-6 6-6"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div
+              class="dok-tab-scroll"
+              id="dok-tab-scroll"
+              role="tablist"
+              aria-label="Pilih tanggal dokumentasi"
+            >
+              <!-- Tab dibuat via JS -->
+            </div>
+            <button
+              class="dok-tab-arrow dok-tab-next"
+              id="dok-next"
+              aria-label="Geser kanan"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M9 18l6-6-6-6"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
           </div>
+
+          <!-- Grid 3 flip card -->
+          <div class="dok-grid" id="dok-grid" data-reveal>
+            <!-- Kartu dibuat via JS -->
+          </div>
+
+          <!-- Indikator foto aktif -->
+          <div
+            class="dok-indicator"
+            id="dok-indicator"
+            aria-live="polite"
+          ></div>
         </div>
       </section>
 

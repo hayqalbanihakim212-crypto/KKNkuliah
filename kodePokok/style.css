@@ -3694,3 +3694,387 @@ html[data-theme="dark"] .program-copy {
     height: 200px;
   }
 }
+
+/* ============================================================
+   DOKUMENTASI KEGIATAN — SISTEM TANGGAL + FLIP CARD
+   28 Juli – 28 Agustus 2026
+   ============================================================ */
+
+/* Subtitle header */
+.dok-subtitle {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.55);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── TAB WRAPPER ── */
+.dok-tab-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+/* Panah navigasi tab */
+.dok-tab-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--neo-yellow, #f5c84c);
+  border: var(--neo-border);
+  box-shadow: 3px 3px 0 var(--neo-black);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    background 0.15s var(--ease);
+  z-index: 2;
+}
+.dok-tab-arrow svg {
+  width: 18px;
+  height: 18px;
+  color: var(--neo-black);
+}
+.dok-tab-arrow:hover {
+  background: var(--neo-black);
+  color: #fff;
+}
+.dok-tab-arrow:hover svg {
+  color: #fff;
+}
+.dok-tab-arrow:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--neo-black);
+}
+.dok-tab-arrow:disabled,
+.dok-tab-arrow.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Scroll container tab */
+.dok-tab-scroll {
+  flex: 1;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-left: none;
+  border-right: none;
+}
+.dok-tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tiap tombol tab tanggal */
+.dok-tab-btn {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: var(--neo-border);
+  border-left: none;
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--neo-black);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.15s var(--ease),
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease);
+  letter-spacing: 0.02em;
+  position: relative;
+}
+.dok-tab-btn:first-child {
+  border-left: var(--neo-border);
+}
+.dok-tab-btn:hover {
+  background: #f5f1e8;
+  z-index: 1;
+}
+.dok-tab-btn.is-active {
+  background: var(--neo-yellow, #f5c84c);
+  z-index: 2;
+  box-shadow: 0 3px 0 var(--neo-black);
+}
+.dok-tab-btn .tab-day {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  opacity: 0.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.dok-tab-btn .tab-date {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 900;
+  font-family: var(--font-display, serif);
+}
+
+/* ── GRID 3 KOLOM ── */
+.dok-grid {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ── FLIP CARD — 1 card per tanggal ── */
+.dok-card {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 360px;
+  border: var(--neo-border);
+  box-shadow: var(--neo-shadow);
+  background: #fff;
+  overflow: hidden;
+  transition:
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+.dok-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--neo-black);
+}
+
+.dok-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Semua face tumpuk, default tersembunyi */
+.dok-face {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Face aktif — yang tampil */
+.dok-face.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  z-index: 1;
+  position: relative; /* agar card punya tinggi sesuai face aktif */
+}
+
+/* Face keluar — fade ke atas */
+.dok-face.is-leaving {
+  opacity: 0;
+  transform: translateY(-12px) scale(1.02);
+  pointer-events: none;
+  z-index: 2;
+  transition:
+    opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  position: absolute;
+}
+
+.dok-face-1,
+.dok-face-2,
+.dok-face-3 {
+  /* dihandle is-active, tidak butuh rotasi */
+}
+
+/* Foto placeholder & asli */
+.dok-face-img {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  display: block;
+  min-height: 0;
+  border-bottom: var(--neo-border);
+  background: #e8e4d8;
+  transition: transform 0.4s var(--ease);
+}
+
+/* Placeholder SVG */
+.dok-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f0ece0;
+  border-bottom: var(--neo-border);
+  padding: 28px 16px;
+  min-height: 180px;
+}
+.dok-placeholder svg {
+  width: 44px;
+  height: 44px;
+  color: rgba(17, 17, 17, 0.25);
+}
+.dok-placeholder-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(17, 17, 17, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* Badge nomor foto */
+.dok-face-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--neo-yellow, #f5c84c);
+  border: 2px solid var(--neo-black);
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 3px 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--neo-black);
+  z-index: 1;
+}
+
+/* Caption bawah foto */
+.dok-face-caption {
+  padding: 12px 14px 14px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--neo-black);
+  line-height: 1.4;
+  background: #fff;
+}
+.dok-face-caption .cap-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 3px;
+}
+
+/* Hint "klik untuk flip" di pojok kiri bawah */
+.dok-flip-hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.dok-flip-hint svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Hover sudah dihandle di .dok-card utama */
+
+/* ── INDIKATOR TITIK ── */
+.dok-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+.dok-dot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--neo-black);
+  background: #fff;
+  cursor: pointer;
+  transition:
+    background 0.18s var(--ease),
+    transform 0.18s var(--ease);
+}
+.dok-dot.is-active {
+  background: var(--neo-black);
+  transform: scale(1.3);
+}
+
+/* ── DARK MODE ── */
+html[data-theme="dark"] .dok-card {
+  background: #1e2e28;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .dok-face {
+  background: #1e2e28;
+}
+html[data-theme="dark"] .dok-placeholder {
+  background: #192620;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .dok-face-caption {
+  background: #1e2e28;
+  color: #f5f1e6;
+}
+html[data-theme="dark"] .dok-tab-btn {
+  background: #192620;
+  color: #f5f1e6;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+html[data-theme="dark"] .dok-tab-btn.is-active {
+  background: var(--gold, #c9a227);
+  color: #111;
+}
+html[data-theme="dark"] .dok-tab-arrow {
+  background: #c9a227;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .dok-dot {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+html[data-theme="dark"] .dok-dot.is-active {
+  background: #f5f1e6;
+}
+html[data-theme="dark"] .dok-subtitle {
+  color: rgba(245, 241, 230, 0.45);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .dok-card {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dok-card {
+    max-width: 100%;
+  }
+  .dok-tab-btn {
+    padding: 10px 13px;
+  }
+  .dok-tab-btn .tab-date {
+    font-size: 0.8rem;
+  }
+}

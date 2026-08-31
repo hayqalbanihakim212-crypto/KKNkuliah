@@ -1028,4 +1028,404 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (e.key === "ArrowLeft") bukaDivisiRelatif(-1);
     else if (e.key === "ArrowRight") bukaDivisiRelatif(1);
   });
+
+  /* =========================================================
+     DOKUMENTASI KEGIATAN — FLIP CARD + NAVIGASI TANGGAL
+     28 Juli 2026 – 28 Agustus 2026 (32 hari)
+     
+     Struktur data:
+       dataDok[tanggal] = [
+         { foto: "url", caption: "teks" },  // foto 1 (depan)
+         { foto: "url", caption: "teks" },  // foto 2
+         { foto: "url", caption: "teks" },  // foto 3
+       ]
+     
+     Jika foto kosong/null → tampil placeholder.
+     Klik kartu → flip ke foto berikutnya (loop 1→2→3→1).
+     ========================================================= */
+  (function () {
+    /* ── 1. GENERATE DAFTAR TANGGAL ── */
+    function buatDaftarTanggal(mulai, akhir) {
+      const daftar = [];
+      const cur = new Date(mulai);
+      const end = new Date(akhir);
+      while (cur <= end) {
+        daftar.push(new Date(cur));
+        cur.setDate(cur.getDate() + 1);
+      }
+      return daftar;
+    }
+
+    const daftarTanggal = buatDaftarTanggal("2026-07-28", "2026-08-28");
+
+    /* ── 2. FORMAT TANGGAL ── */
+    const HARI_SINGKAT = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+    const BULAN_SINGKAT = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Agt",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des",
+    ];
+
+    function formatTabLabel(d) {
+      return {
+        hari: HARI_SINGKAT[d.getDay()],
+        tanggal: d.getDate() + " " + BULAN_SINGKAT[d.getMonth()],
+      };
+    }
+
+    function formatTanggalLengkap(d) {
+      const namaHari = [
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu",
+      ];
+      const namaBulan = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      return (
+        namaHari[d.getDay()] +
+        ", " +
+        d.getDate() +
+        " " +
+        namaBulan[d.getMonth()] +
+        " " +
+        d.getFullYear()
+      );
+    }
+
+    /* ── 3. DATA FOTO PER TANGGAL ── */
+    // Format key: "YYYY-MM-DD"
+    function keyTanggal(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return y + "-" + m + "-" + dd;
+    }
+
+    // ── ISI DATA FOTO DI SINI ──
+    // Hapus null & ganti dengan path foto asli saat tersedia.
+    // Contoh: { foto: "png/dok/28-jul-1.jpg", caption: "Tiba di lokasi KKN" }
+    const dataDok = {
+      "2026-07-28": [
+        { foto: null, caption: "Pembekalan & pelepasan peserta KKN" },
+        { foto: null, caption: "Perkenalan dengan perangkat desa" },
+        { foto: null, caption: "Tiba di lokasi penempatan" },
+      ],
+      // Tanggal lain akan otomatis tampil placeholder kosong
+    };
+
+    function getFoto(d) {
+      const key = keyTanggal(d);
+      if (dataDok[key]) return dataDok[key];
+      // Default: 3 slot kosong
+      return [
+        { foto: null, caption: "Foto kegiatan #1" },
+        { foto: null, caption: "Foto kegiatan #2" },
+        { foto: null, caption: "Foto kegiatan #3" },
+      ];
+    }
+
+    /* ── 4. ELEMEN DOM ── */
+    const tabScroll = document.getElementById("dok-tab-scroll");
+    const dokGrid = document.getElementById("dok-grid");
+    const indikator = document.getElementById("dok-indicator");
+    const prevBtn = document.getElementById("dok-prev");
+    const nextBtn = document.getElementById("dok-next");
+    if (!tabScroll || !dokGrid) return;
+
+    /* ── 5. ICON SVG ── */
+    const ICON_KAMERA = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.6"/>
+    </svg>`;
+
+    const ICON_FLIP = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M1 4v6h6M23 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+
+    /* ── 6. BUILD TABS ── */
+    let tabAktif = 0;
+    const tabBtns = [];
+
+    daftarTanggal.forEach(function (d, i) {
+      const label = formatTabLabel(d);
+      const btn = document.createElement("button");
+      btn.className = "dok-tab-btn" + (i === 0 ? " is-active" : "");
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      btn.setAttribute("aria-controls", "dok-grid");
+      btn.setAttribute("type", "button");
+      btn.innerHTML =
+        '<span class="tab-day">' +
+        label.hari +
+        "</span>" +
+        '<span class="tab-date">' +
+        label.tanggal +
+        "</span>";
+
+      btn.addEventListener("click", function () {
+        pindahTab(i);
+      });
+
+      tabScroll.appendChild(btn);
+      tabBtns.push(btn);
+    });
+
+    /* ── 7. RENDER KARTU ── */
+    function buatFace(nomor, dataFoto, tanggalStr, indexHari) {
+      const face = document.createElement("div");
+      face.className = "dok-face dok-face-" + nomor;
+
+      // Badge nomor
+      const badge = document.createElement("span");
+      badge.className = "dok-face-badge";
+      badge.textContent = "Foto " + nomor;
+      face.appendChild(badge);
+
+      // Foto atau placeholder
+      if (dataFoto && dataFoto.foto) {
+        const img = document.createElement("img");
+        img.className = "dok-face-img img-reveal";
+        img.src = dataFoto.foto;
+        img.alt = dataFoto.caption || "Dokumentasi hari ke-" + (indexHari + 1);
+        img.loading = "lazy";
+        img.addEventListener("load", function () {
+          img.classList.add("img-loaded");
+        });
+        face.appendChild(img);
+      } else {
+        const ph = document.createElement("div");
+        ph.className = "dok-placeholder";
+        ph.innerHTML =
+          ICON_KAMERA +
+          '<span class="dok-placeholder-label">Hari ke-' +
+          (indexHari + 1) +
+          "<br>" +
+          tanggalStr +
+          "</span>";
+        face.appendChild(ph);
+      }
+
+      // Caption
+      const caption = document.createElement("div");
+      caption.className = "dok-face-caption";
+      const capLabel = document.createElement("span");
+      capLabel.className = "cap-label";
+      capLabel.textContent = tanggalStr;
+      caption.appendChild(capLabel);
+      const capText = document.createElement("span");
+      capText.textContent =
+        dataFoto && dataFoto.caption ? dataFoto.caption : "—";
+      caption.appendChild(capText);
+
+      // Hint flip di semua face — pengguna selalu tahu bisa klik lagi
+      const hint = document.createElement("div");
+      hint.className = "dok-flip-hint";
+      hint.innerHTML =
+        ICON_FLIP +
+        (nomor === 3
+          ? "Klik untuk kembali ke foto pertama"
+          : "Klik untuk foto berikutnya");
+      caption.appendChild(hint);
+
+      face.appendChild(caption);
+      return face;
+    }
+
+    function renderGrid(indexTanggal) {
+      const d = daftarTanggal[indexTanggal];
+      const fotos = getFoto(d);
+      const tanggalStr = formatTanggalLengkap(d);
+
+      dokGrid.innerHTML = "";
+
+      // 1 CARD per tanggal.
+      // Foto 1 tampil di depan. Klik → Foto 2. Klik lagi → Foto 3. Klik lagi → kembali Foto 1.
+      const card = document.createElement("div");
+      card.className = "dok-card";
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute(
+        "aria-label",
+        tanggalStr + " · Klik untuk foto berikutnya",
+      );
+
+      const inner = document.createElement("div");
+      inner.className = "dok-card-inner";
+
+      const face1 = buatFace(1, fotos[0], tanggalStr, indexTanggal);
+      const face2 = buatFace(2, fotos[1], tanggalStr, indexTanggal);
+      const face3 = buatFace(3, fotos[2], tanggalStr, indexTanggal);
+      inner.appendChild(face1);
+      inner.appendChild(face2);
+      inner.appendChild(face3);
+
+      card.appendChild(inner);
+
+      let current = 0;
+      const faces = [face1, face2, face3];
+
+      function doFlip() {
+        var leaving = faces[current];
+        current = (current + 1) % 3;
+        var entering = faces[current];
+
+        leaving.classList.remove("is-active");
+        leaving.classList.add("is-leaving");
+        var onEnd = function () {
+          leaving.classList.remove("is-leaving");
+          leaving.removeEventListener("transitionend", onEnd);
+        };
+        leaving.addEventListener("transitionend", onEnd);
+        entering.classList.add("is-active");
+      }
+
+      card.addEventListener("click", doFlip);
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          doFlip();
+        }
+      });
+
+      dokGrid.appendChild(card);
+
+      // Face pertama langsung aktif — tanpa delay agar tidak ada blank flash
+      face1.classList.add("is-active");
+
+      // Reveal animation
+      card.style.setProperty("--reveal-i", 0);
+      card.classList.add("reveal");
+      setTimeout(function () {
+        card.classList.add("is-visible");
+      }, 80);
+
+      // Update indikator titik
+      renderIndikator(indexTanggal);
+    }
+
+    /* ── 8. INDIKATOR TITIK ── */
+    function renderIndikator(aktif) {
+      if (!indikator) return;
+      indikator.innerHTML = "";
+      // Tampilkan max 7 titik (current ± 3)
+      const total = daftarTanggal.length;
+      const start = Math.max(0, Math.min(aktif - 3, total - 7));
+      const end = Math.min(total - 1, start + 6);
+
+      for (let i = start; i <= end; i++) {
+        const dot = document.createElement("button");
+        dot.className = "dok-dot" + (i === aktif ? " is-active" : "");
+        dot.setAttribute("type", "button");
+        dot.setAttribute(
+          "aria-label",
+          "Ke tanggal " + formatTabLabel(daftarTanggal[i]).tanggal,
+        );
+        (function (idx) {
+          dot.addEventListener("click", function () {
+            pindahTab(idx);
+          });
+        })(i);
+        indikator.appendChild(dot);
+      }
+    }
+
+    /* ── 9. PINDAH TAB ── */
+    function pindahTab(idx) {
+      if (idx === tabAktif) return;
+
+      // Update tab button styles
+      tabBtns[tabAktif].classList.remove("is-active");
+      tabBtns[tabAktif].setAttribute("aria-selected", "false");
+      tabAktif = idx;
+      tabBtns[tabAktif].classList.add("is-active");
+      tabBtns[tabAktif].setAttribute("aria-selected", "true");
+
+      // Scroll tab ke posisi aktif
+      tabBtns[tabAktif].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+
+      // Update panah
+      if (prevBtn) prevBtn.classList.toggle("is-disabled", tabAktif === 0);
+      if (nextBtn)
+        nextBtn.classList.toggle(
+          "is-disabled",
+          tabAktif === daftarTanggal.length - 1,
+        );
+
+      // Render grid dengan animasi fade
+      dokGrid.style.opacity = "0";
+      dokGrid.style.transform = "translateY(10px)";
+      dokGrid.style.transition = "opacity 0.2s ease, transform 0.2s ease";
+      setTimeout(function () {
+        renderGrid(tabAktif);
+        dokGrid.style.opacity = "1";
+        dokGrid.style.transform = "translateY(0)";
+      }, 200);
+    }
+
+    /* ── 10. PANAH NAVIGASI ── */
+    if (prevBtn) {
+      prevBtn.classList.add("is-disabled");
+      prevBtn.addEventListener("click", function () {
+        if (tabAktif > 0) pindahTab(tabAktif - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        if (tabAktif < daftarTanggal.length - 1) pindahTab(tabAktif + 1);
+      });
+    }
+
+    /* ── 11. SCROLL TAB DENGAN MOUSE DRAG ── */
+    let isTabDragging = false;
+    let tabDragStart = 0;
+    let tabScrollStart = 0;
+
+    tabScroll.addEventListener("mousedown", function (e) {
+      isTabDragging = true;
+      tabDragStart = e.clientX;
+      tabScrollStart = tabScroll.scrollLeft;
+      tabScroll.style.cursor = "grabbing";
+    });
+    window.addEventListener("mousemove", function (e) {
+      if (!isTabDragging) return;
+      tabScroll.scrollLeft = tabScrollStart - (e.clientX - tabDragStart);
+    });
+    window.addEventListener("mouseup", function () {
+      isTabDragging = false;
+      tabScroll.style.cursor = "";
+    });
+
+    /* ── 12. INITIAL RENDER ── */
+    renderGrid(0);
+  })(); // end IIFE dokumentasi
 });
