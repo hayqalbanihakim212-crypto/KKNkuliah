@@ -874,6 +874,17 @@ document.addEventListener("DOMContentLoaded", function () {
     "perlengkapan",
   ];
 
+  const labelDivisi = {
+    ketua: "Ketua",
+    sekretaris: "Sekretaris",
+    bendahara: "Bendahara",
+    acara: "Acara",
+    humas: "Humas",
+    konsumsi: "Konsumsi",
+    pdd: "PDD",
+    perlengkapan: "Perlengkapan",
+  };
+
   const strukturModal = document.getElementById("struktur-modal");
   const modalCloseBtn = document.getElementById("modal-close-btn");
   const modalPrevBtn = document.getElementById("modal-prev-btn");
@@ -962,14 +973,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const divisi = dataDivisi[kunciDivisi];
     if (!divisi || !strukturModal) return;
     divisiAktif = kunciDivisi;
+    const namaDivisi = labelDivisi[kunciDivisi] || kunciDivisi;
 
     if (modalDivisiImg) {
       modalDivisiImg.src = divisi.gambar;
-      modalDivisiImg.alt = divisi.nama;
+      modalDivisiImg.alt = namaDivisi;
       modalDivisiImg.loading = "lazy";
     }
-    if (modalDivisiTitle) modalDivisiTitle.textContent = divisi.nama;
-    if (modalDivisiEyebrow) modalDivisiEyebrow.textContent = divisi.nama;
+    if (modalDivisiTitle) modalDivisiTitle.textContent = namaDivisi;
+    if (modalDivisiEyebrow) modalDivisiEyebrow.textContent = namaDivisi;
     if (modalAnggotaList) renderDaftarAnggota(divisi.anggota);
 
     strukturModal.classList.add("active");
@@ -1131,19 +1143,458 @@ document.addEventListener("DOMContentLoaded", function () {
     // Contoh: { foto: "png/dok/28-jul-1.jpg", caption: "Tiba di lokasi KKN" }
     const dataDok = {
       "2026-07-28": [
-        { foto: null, caption: "Pembekalan & pelepasan peserta KKN" },
-        { foto: null, caption: "Perkenalan dengan perangkat desa" },
-        { foto: null, caption: "Tiba di lokasi penempatan" },
+        {
+          foto: "png/proker/umum/pertemuan_denganpkl1.jpg",
+          caption: "Pembekalan & pelepasan peserta KKN",
+        },
+        {
+          foto: "png/proker/umum/pelepasanpamong.jpg",
+          caption: "Pelepasan oleh Desa Pamong",
+        },
+        {
+          foto: "png/proker/umum/sambutan_lurah.jpg",
+          caption: "Penyambutan oleh Lurah",
+        },
       ],
       // Tanggal lain akan otomatis tampil placeholder kosong
+      "2026-07-29": [
+        {
+          foto: "png/proker/umum/sambutan_lurah.jpg",
+          caption: "Sambutan hangat lurah",
+        },
+        { foto: null, caption: "Foto kegiatan #2" },
+        { foto: null, caption: "Foto kegiatan #3" },
+      ],
+      "2026-07-30": [
+        {
+          foto: "png/proker/umum/sd.jpeg",
+          caption: "Sambutan Hangat  dari Siswa Sekolah Dasar",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "",
+        },
+      ],
+      "2026-07-31": [
+        {
+          foto: "png/proker/umum/sd_impres.jpg",
+          caption: "Apel Pagi Bersama Tenaga Pendidik Sd Wilayah KKN",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-01": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-02": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-03": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-04": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-05": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-06": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-07": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-08": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-09": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-10": [
+        {
+          foto: "png/proker/islami/kua3.jpg",
+          caption: "Silaturahmi ke Kantor KUA dengan Seluruh staf KUA",
+        },
+        {
+          foto: "png/proker/islami/kua2.jpg",
+          caption: "Diskusi Singkat tentang Hakikat KKn bersama staf KUA",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-11": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-12": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-13": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-14": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-15": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-16": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-17": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-18": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-19": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-20": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-21": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-22": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-23": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-24": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-25": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-26": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-27": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
+      "2026-08-28": [
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "kosong",
+        },
+        {
+          foto: null,
+          caption: "belum diisi",
+        },
+      ],
     };
-
     function getFoto(d) {
       const key = keyTanggal(d);
       if (dataDok[key]) return dataDok[key];
       // Default: 3 slot kosong
       return [
-        { foto: null, caption: "Foto kegiatan #1" },
+        {
+          foto: null,
+          caption: "foto kegitan #1",
+        },
         { foto: null, caption: "Foto kegiatan #2" },
         { foto: null, caption: "Foto kegiatan #3" },
       ];
