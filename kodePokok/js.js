@@ -1349,16 +1349,19 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-12": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/posyandu1.jpg",
+          caption:
+            "Ikut Serta dalam program stunting dari pihak Posyandu Kelurahan",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/posyandu2.jpg",
+          caption:
+            "Penyuluhan Kesehatan Ibu dan Anak oleh Tim Posyandu dan Tim KKN",
         },
         {
-          foto: null,
-          caption: "belum diisi",
+          foto: "png/proker/umum/posyandu3.jpg",
+          caption:
+            "ikut serta dalam pelaksanaan Posyandu dengan aparatur negara wilayah KKN",
         },
       ],
       "2026-08-13": [
