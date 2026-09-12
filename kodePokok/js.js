@@ -1144,7 +1144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dataDok = {
       "2026-07-28": [
         {
-          foto: "png/proker/umum/pertemuan_denganpkl1.jpg",
+          foto: "png/proker/umum/pelepasan_pamong2.jpg",
           caption: "Pembekalan & pelepasan peserta KKN",
         },
         {
@@ -1152,8 +1152,8 @@ document.addEventListener("DOMContentLoaded", function () {
           caption: "Pelepasan oleh Desa Pamong",
         },
         {
-          foto: "png/proker/umum/sambutan_lurah.jpg",
-          caption: "Penyambutan oleh Lurah",
+          foto: "png/proker/umum/pelepasan_pamong3.jpg",
+          caption: "Pesan Kesan dari PamongUntuk Mahasiswa KKN",
         },
       ],
       // Tanggal lain akan otomatis tampil placeholder kosong
@@ -1162,8 +1162,14 @@ document.addEventListener("DOMContentLoaded", function () {
           foto: "png/proker/umum/sambutan_lurah.jpg",
           caption: "Sambutan hangat lurah",
         },
-        { foto: null, caption: "Foto kegiatan #2" },
-        { foto: null, caption: "Foto kegiatan #3" },
+        {
+          foto: "png/proker/umum/kantorlurahcwk.jpg",
+          caption: "Kekompakan di Kantor Lurah",
+        },
+        {
+          foto: "png/proker/umum/lurah2.jpg",
+          caption: "Kunjungan ke Kantor Lurah",
+        },
       ],
       "2026-07-30": [
         {
@@ -1171,8 +1177,9 @@ document.addEventListener("DOMContentLoaded", function () {
           caption: "Sambutan Hangat  dari Siswa Sekolah Dasar",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/apelsdimpres.jpg",
+          caption:
+            "Ikut serta dala m Apel Pagi Bersama Tenaga Pendidik Sd Wilayah KKN",
         },
         {
           foto: null,
@@ -1209,8 +1216,8 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-02": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/senam.jpg",
+          caption: "Senam bersama warga desa",
         },
         {
           foto: null,
@@ -1223,22 +1230,22 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-03": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/smp.jpeg",
+          caption: "Permohonan ikut serta dalam kegiatan SMP",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/smp2.jpg",
+          caption: "ikut serta dalam kegiatan edukasi SMP",
         },
         {
-          foto: null,
-          caption: "belum diisi",
+          foto: "png/proker/islami/smp_carauseljpg",
+          caption: "Silaturahmi dengan Kepala sekolah SMP dan seluruh staf SMP",
         },
       ],
       "2026-08-04": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png /proke/umum/uwak_vespa.jpg",
+          caption: "Silaturahmi dengan warga desa",
         },
         {
           foto: null,
@@ -1251,12 +1258,12 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-05": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "/png/proker/umum/perpisahan_sd.jpg",
+          caption: "Perpisahan dengan Staf Sd",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/tong_sampah.jpg",
+          caption: "Pembuatan Tong Sampah dari BarangBekas",
         },
         {
           foto: null,
@@ -1329,8 +1336,8 @@ document.addEventListener("DOMContentLoaded", function () {
           caption: "Diskusi Singkat tentang Hakikat KKn bersama staf KUA",
         },
         {
-          foto: null,
-          caption: "belum diisi",
+          foto: "png/proker/islami/sosialisasi_kua.jpg",
+          caption: "Berbincang dengan staf KUA tentang Hakikat KUA",
         },
       ],
       "2026-08-11": [
@@ -1366,16 +1373,18 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-13": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/pesantren1.jpg",
+          caption:
+            "Silaturahmi ke Pondok Pesantren dengan Seluruh Staf Pengajar",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/pesantren2.jpg",
+          caption: "ikut Serta dalam program Pesatren dengan mahasiswa KKN",
         },
         {
-          foto: null,
-          caption: "belum diisi",
+          foto: "png/proker/islami/pesantren3.jpg",
+          caption:
+            "sosialisasi Mahsiswa KKN dengan Siswa Pesatren tingkat SMA tentang Beasiswa dan Universitas",
         },
       ],
       "2026-08-14": [
@@ -1398,8 +1407,9 @@ document.addEventListener("DOMContentLoaded", function () {
           caption: "kosong",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/partisipasi_pemupukan.jpg",
+          caption:
+            "ikut serta dalam event pemupukan tanaman bersama warga desa",
         },
         {
           foto: null,
@@ -1422,12 +1432,13 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-17": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/17an.jpg",
+          caption:
+            "Ikut serta dalam kegiatan  17an bersama yang diselenggarakan Desa",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/umum/17an2.jpg",
+          caption: "Pawai dalam kegiatan 17an bersama warga desa",
         },
         {
           foto: null,
@@ -1520,26 +1531,30 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-24": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/fasih.jpg",
+          caption:
+            "Melaksanakan Festival anak Sholeholeh Mahasiswa KKN di Desa",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/fasih2.jpg",
+          caption:
+            "Pelaksaan Loma dalam kegiatan Festival anak Sholeh oleh Mahasiswa KKN di Desa",
         },
         {
-          foto: null,
-          caption: "belum diisi",
+          foto: "png/proker/islami/fasih3.jpg",
+          caption:
+            "Pemberian Hadiah kepada pemenang lomba Festival anak Sholeh oleh Mahasiswa KKN di Desa",
         },
       ],
       "2026-08-25": [
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/maulid.jpg",
+          caption: "Pelaksaan Maulid Nabi Muhammad SAW di Desa",
         },
         {
-          foto: null,
-          caption: "kosong",
+          foto: "png/proker/islami/maulidDan_perpisahan.jpg",
+          caption:
+            "Pelaksaan Maulid Nabi Muhammad SAW dan Perpisahan dengan Warga Desa",
         },
         {
           foto: null,
