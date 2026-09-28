@@ -1216,7 +1216,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-02": [
         {
-          foto: "png/proker/islami/senam.jpg",
+          foto: "png/proker/umum/senam.jpg",
           caption: "Senam bersama warga desa",
         },
         {
@@ -1230,15 +1230,15 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-03": [
         {
-          foto: "png/proker/islami/smp.jpeg",
+          foto: "png/proker/umum/smp.jpeg",
           caption: "Permohonan ikut serta dalam kegiatan SMP",
         },
         {
-          foto: "png/proker/islami/smp2.jpg",
+          foto: "png/proker/umum/smp2.jpg",
           caption: "ikut serta dalam kegiatan edukasi SMP",
         },
         {
-          foto: "png/proker/islami/smp_carauseljpg",
+          foto: "png/proker/umum/smp_carauseljpg",
           caption: "Silaturahmi dengan Kepala sekolah SMP dan seluruh staf SMP",
         },
       ],
@@ -1403,13 +1403,13 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       "2026-08-15": [
         {
-          foto: null,
-          caption: "kosong",
-        },
-        {
           foto: "png/proker/umum/partisipasi_pemupukan.jpg",
           caption:
             "ikut serta dalam event pemupukan tanaman bersama warga desa",
+        },
+        {
+          foto: null,
+          caption: "kosong",
         },
         {
           foto: null,
