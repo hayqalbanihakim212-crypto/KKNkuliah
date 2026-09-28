@@ -10,7 +10,7 @@
 
 > Website profil dan dokumentasi kegiatan KKN 2026 di **Desa Tiga Beringin**, Kelurahan TigaBinanga menampilkan profil desa, program kerja, dan struktur tim.
 
-### 🌐 [Lihat Demo →](https://hayqalbanihakim212-crypto.github.io/KKNkuliah/kodePokok/home.html)
+### 🌐 [Lihat Website Resmi ->](https://kkn-2026-kelurahan-tigabinanga.vercel.app/)
 
 </div>
 
